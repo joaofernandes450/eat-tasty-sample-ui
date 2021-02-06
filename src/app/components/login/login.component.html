@@ -1,0 +1,48 @@
+<div class="login-div" fxFlexFill>
+    <div fxLayout fxLayout.lt-md="column" fxLayoutAlign="center center" style="margin: 2%;" fxLayoutGap="10px">
+        <div class="login-image-slider" fxFlex="70%" fxHide.lt-md>
+            <img
+                src="https://img.etimg.com/thumb/msid-65824015,width-1200,height-900,imgsize-840024,overlay-etpanache/photo.jpg">
+        </div>
+        <div class="login-form" fxFlex="30%" fxFlex.lt-md="100%">
+            <h2>{{recoverPassword ? 'Recover Password' : 'Welcome back'}}</h2>
+
+            <div class="login-info" *ngIf="!recoverPassword">
+                <form [formGroup]="loginForm" (ngSubmit)="userLogin()">
+                    <mat-form-field class="form-field-full-width" appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email" required>
+                        <mat-error *ngIf="loginForm.controls.email.invalid && loginForm.controls.email.errors.pattern">
+                            Email not valid!
+                        </mat-error>
+                        <mat-error *ngIf="loginForm.controls.email.invalid && loginForm.controls.email.errors.required">
+                            Email is <strong>required</strong>!
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="form-field-full-width" appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
+                        <button mat-icon-button type="button" matSuffix (click)="hidePassword = !hidePassword"
+                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                            <mat-icon>{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+                        </button>
+                        <mat-error
+                            *ngIf="loginForm.controls.password.invalid && loginForm.controls.password.errors.required">
+                            Password is <strong>required</strong>!
+                        </mat-error>
+                    </mat-form-field>
+                    <div style="text-align: right;">
+                        <p class="link-underline" (click)="recoverPassword = !recoverPassword">Forgot your
+                            password?</p>
+                        <p class="link-underline">Got an account already?</p>
+                    </div>
+
+                    <div class="form-buttons" style="text-align: left">
+                        <button mat-flat-button color="primary">Sign In</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
