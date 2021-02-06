@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
   hidePassword: boolean = true;
   recoverPassword: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private authenticationService: AuthenticationService) {
   }
 
   ngOnInit(): void {
@@ -36,8 +37,12 @@ export class LoginComponent implements OnInit {
    */
   userLogin(): void {
     if (this.loginForm.valid) {
-      //service
-      this.router.navigate(['/app']);
+      this.authenticationService.userLogin(this.loginForm.get('email').value, this.loginForm.get('password').value).subscribe(res => {
+        if (res && res.success) {
+          console.log("entrei");
+          this.router.navigate(['/app'])
+        }
+      })
     }
   }
 

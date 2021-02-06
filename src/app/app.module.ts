@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 // FlexLayout Module
 import { FlexLayoutModule } from "@angular/flex-layout";
@@ -23,6 +24,8 @@ import { AppComponent } from './app.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
 import { LoginComponent } from './components/login/login.component';
+import { UserHomepageComponent } from './components/user-homepage/user-homepage.component';
+import { AuthenticationGuard } from './guards/authentication/authentication.guard';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,7 @@ import { LoginComponent } from './components/login/login.component';
     HomepageComponent,
     NavigationBarComponent,
     LoginComponent,
+    UserHomepageComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,9 +48,10 @@ import { LoginComponent } from './components/login/login.component';
     FlexLayoutModule,
     FormsModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [AuthenticationGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
