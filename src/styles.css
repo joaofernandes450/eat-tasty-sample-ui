@@ -12,3 +12,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     color: grey !important;
     cursor: pointer;
 }
+
+.button-right-align {
+    text-align: right;
+}
+
+.button-right-align button {
+    margin-left: 16px;
+}

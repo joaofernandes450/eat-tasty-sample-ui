@@ -1,0 +1,15 @@
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+  }
+
+carousel {
+    height: 100% !important;
+}
+
+.flex-layout-register-div{
+  height: 100vh;
+  padding-left: 15%;
+  padding-right: 15%;
+  padding-top: 10%;
+  padding-bottom: 10%;
+}

@@ -7,7 +7,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from "@angular/flex-layout";
 
 // Angular Material
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,9 +15,17 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
+
+// Packages
+import { IvyCarouselModule } from 'angular-responsive-carousel';
+
+// Google Maps
+import { AgmCoreModule } from '@agm/core';
 
 // Components & Routing
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
@@ -27,6 +34,7 @@ import { LoginComponent } from './components/login/login.component';
 import { UserHomepageComponent } from './components/user-homepage/user-homepage.component';
 import { AuthenticationGuard } from './guards/authentication/authentication.guard';
 import { RegisterComponent } from './components/register/register.component';
+import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 
 @NgModule({
   declarations: [
@@ -51,7 +59,16 @@ import { RegisterComponent } from './components/register/register.component';
     FormsModule,
     MatInputModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    IvyCarouselModule,
+    MatStepperModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAQvl6bTYhrYsvSDAqaUzrVcd_tMG326pM',
+      libraries: ['places']
+    }),
+    MatGoogleMapsAutocompleteModule,
   ],
   providers: [AuthenticationGuard],
   bootstrap: [AppComponent]

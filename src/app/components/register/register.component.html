@@ -1,1 +1,85 @@
-<p>register works!</p>
+<div class="register-div" style="min-height: 100vh">
+    <div class="flex-layout-register-div" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" *ngIf="dataLoaded">
+        <div fxFlex="50%" fxLayoutAlign=" stretch">
+            <carousel [images]="images" [objectFit]="'cover'" [cellWidth]="'100%'" [arrowsOutside]="false"
+                [autoplay]="true" [dots]="true" [loop]="false" [arrows]="true">
+            </carousel>
+        </div>
+        <div class="register-form" fxLayoutAlign="center start">
+            <mat-horizontal-stepper linear #stepper>
+                <mat-step [stepControl]="registerFirstFormGroup" [editable]="false">
+                    <form [formGroup]="registerFirstFormGroup">
+                        <ng-template matStepLabel>Address validation</ng-template>
+                        <h3>
+                            1. Validate if your place is covered by our delivery radius
+                        </h3>
+                        <mat-form-field class="form-field-full-width" appearance="outline">
+                            <mat-label>Address</mat-label>
+                            <input matInput formControlName="verifyAddress" required>
+                        </mat-form-field>
+                        <mat-error
+                            *ngIf="registerFirstFormGroup.controls.verifyAddress.invalid && registerFirstFormGroup.controls.verifyAddress.errors.required">
+                            Address is <strong>required</strong>!
+                        </mat-error>
+                        <div class="button-right-align">
+                            <button mat-raised-button color="primary" (click)="onNext(stepper)">Next</button>
+                        </div>
+                    </form>
+                </mat-step>
+                <mat-step [stepControl]="registerSecondFormGroup" [editable]="false">
+                    <form [formGroup]="registerSecondFormGroup">
+                        <ng-template matStepLabel>Delivery Information</ng-template>
+                        <h3> 2. Add your delivery place</h3>
+                        <mat-form-field class="form-field-full-width" appearance="outline">
+                            <mat-label>Name of the Delivery Place</mat-label>
+                            <input matInput formControlName="delivery" required>
+                        </mat-form-field>
+                        <mat-error
+                            *ngIf="registerSecondFormGroup.controls.delivery.invalid && registerSecondFormGroup.controls.delivery.errors.required">
+                            Address is <strong>required</strong>!
+                        </mat-error>
+                        <div style="margin-bottom: 1.34375em">
+                            <mat-radio-group formControlName="deliveryType">
+                                <mat-radio-button class="example-margin" value="residential">Residential
+                                </mat-radio-button>
+                                <mat-radio-button class="example-margin" value="company">Company</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        <div fxLayout fxLayoutGap="20px">
+                            <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%">
+                                <mat-label>Floor</mat-label>
+                                <input matInput formControlName="floor">
+                            </mat-form-field>
+                            <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%">
+                                <mat-label>Other Information</mat-label>
+                                <input matInput formControlName="otherInfo">
+                            </mat-form-field>
+                        </div>
+                        <mat-form-field class="form-field-full-width" appearance="outline">
+                            <mat-label>Where would you like to meet the driver?</mat-label>
+                            <input matInput formControlName="driverInfo">
+                        </mat-form-field>
+                        <div class="button-right-align">
+                            <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+                            <button mat-raised-button color="primary" (click)="onNext(stepper)">Next</button>
+                        </div>
+                    </form>
+                </mat-step>
+                <mat-step [stepControl]="registerThirdFormGroup" [editable]="false">
+                    <form [formGroup]="registerThirdFormGroup">
+                        <ng-template matStepLabel>Personal Information</ng-template>
+                        <h3> 3. Add your personal information</h3>
+                        <mat-form-field class="form-field-full-width" appearance="outline">
+                            <mat-label>Name of the Delivery Place</mat-label>
+                            <input matInput formControlName="firstName" required>
+                        </mat-form-field>
+                        <div>
+                            <button mat-button matStepperPrevious>Back</button>
+                            <button mat-button matStepperNext>Next</button>
+                        </div>
+                    </form>
+                </mat-step>
+            </mat-horizontal-stepper>
+        </div>
+    </div>
+</div>
