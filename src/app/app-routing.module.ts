@@ -8,15 +8,15 @@ import { LoginComponent } from './components/login/login.component';
 import { UserHomepageComponent } from './components/user-homepage/user-homepage.component';
 
 const routes: Routes = [
-  {
-    path: '', redirectTo: 'home', pathMatch: 'full',
-  },
-  { path: 'home', component: HomepageComponent },
+  // {
+  //   path: '', redirectTo: 'home', pathMatch: 'full',
+  // },
+  { path: '', component: HomepageComponent },
   { path: 'login', component: LoginComponent },
   {
-    path: 'app', component: UserHomepageComponent, canActivate: [AuthenticationGuard],
+    path: 'app',
     children: [
-
+      { path: 'home', component: UserHomepageComponent, canActivate: [AuthenticationGuard] }
     ]
   }
 ];

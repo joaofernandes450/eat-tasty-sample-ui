@@ -9,19 +9,14 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 export class AuthenticationGuard implements CanActivate {
 
   constructor(
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService, private router: Router
   ) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.authenticationService.userInfo) {
-      const date = new Date();
-      console.log(date)
-      date.setUTCSeconds(this.authenticationService.userInfo.tokenExp);
-      if (date && date.valueOf() > new Date().valueOf()) return true;
-    }
+    if (!this.authenticationService.hasTokenExpired()) return true;
+    this.authenticationService.userLogout();
     return false;
   }
-
 }

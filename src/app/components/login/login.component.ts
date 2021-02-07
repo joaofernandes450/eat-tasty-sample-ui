@@ -39,8 +39,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.authenticationService.userLogin(this.loginForm.get('email').value, this.loginForm.get('password').value).subscribe(res => {
         if (res && res.success) {
-          console.log("entrei");
-          this.router.navigate(['/app'])
+          this.router.navigate(['/app/home'])
         }
       })
     }
