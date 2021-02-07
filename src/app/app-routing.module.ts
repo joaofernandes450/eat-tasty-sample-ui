@@ -6,13 +6,12 @@ import { AuthenticationGuard } from './guards/authentication/authentication.guar
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { LoginComponent } from './components/login/login.component';
 import { UserHomepageComponent } from './components/user-homepage/user-homepage.component';
+import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
-  // {
-  //   path: '', redirectTo: 'home', pathMatch: 'full',
-  // },
   { path: '', component: HomepageComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   {
     path: 'app',
     children: [

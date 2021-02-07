@@ -5,7 +5,7 @@
         <div class="not-logged-buttons" *ngIf="!userInfo">
             <button mat-button routerLink="/login">Sign
                 in</button>
-            <button mat-raised-button color="accent">Sign
+            <button mat-raised-button color="accent" routerLink="/register">Sign
                 up</button>
         </div>
         <div class="logged-in-buttons" *ngIf="userInfo">

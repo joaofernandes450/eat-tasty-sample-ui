@@ -26,6 +26,7 @@ import { NavigationBarComponent } from './components/navigation-bar/navigation-b
 import { LoginComponent } from './components/login/login.component';
 import { UserHomepageComponent } from './components/user-homepage/user-homepage.component';
 import { AuthenticationGuard } from './guards/authentication/authentication.guard';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { AuthenticationGuard } from './guards/authentication/authentication.guar
     NavigationBarComponent,
     LoginComponent,
     UserHomepageComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
