@@ -1,9 +1,22 @@
 <div class="register-div" style="min-height: 100vh">
     <div class="flex-layout-register-div" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" *ngIf="dataLoaded">
         <div fxFlex="50%" fxLayoutAlign=" stretch">
-            <carousel [images]="images" [objectFit]="'cover'" [cellWidth]="'100%'" [arrowsOutside]="false"
-                [autoplay]="true" [dots]="true" [loop]="false" [arrows]="true">
-            </carousel>
+            <gallery id="mixedExample" [thumb]="false" [counter]="false" [autoPlay]="true"
+                [dotsPosition]="top" [loop]="true" [imageSize]="contain">
+            </gallery>
+            <!-- <ng-template #thumbTemplate let-type="type">
+                <span *ngIf="type === 'youtube'" class="item-type">
+                    <fa-icon [icon]="youtubeIcon" size="lg"></fa-icon>
+                </span>
+                <span *ngIf="type === 'video'" class="item-type">
+                    <fa-icon [icon]="videoIcon" size="lg"></fa-icon>
+                </span>
+            </ng-template>
+            <ng-template #itemTemplate let-index="index" let-type="type" let-data="data" let-currIndex="currIndex">
+                <span *ngIf="type === 'image' && index === currIndex" [@slideAnimation] class="item-text">
+                    {{data?.title}}
+                </span>
+            </ng-template> -->
         </div>
         <div class="register-form" fxLayoutAlign="center start">
             <mat-horizontal-stepper linear #stepper>
@@ -23,6 +36,8 @@
                         </mat-error>
                         <div class="button-right-align">
                             <button mat-raised-button color="primary" (click)="onNext(stepper)">Next</button>
+                            <button mat-raised-button color="warn" type="button"
+                                (click)="openAddressValidationDialog()">T</button>
                         </div>
                     </form>
                 </mat-step>

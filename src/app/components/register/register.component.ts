@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { AddressDialogComponent } from '../address-dialog/address-dialog.component';
+
+import { Gallery, GalleryRef } from 'ng-gallery';
 
 export class CustomValidators {
   static phoneNumber(): ValidatorFn {
@@ -32,10 +36,27 @@ export class RegisterComponent implements OnInit {
   registerSecondFormGroup: FormGroup;
   registerThirdFormGroup: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  galleryId = 'mixedExample';
+
+  constructor(private fb: FormBuilder, private dialog: MatDialog, private gallery: Gallery) { }
 
   ngOnInit(): void {
     this.createRegisterForm();
+    const galleryRef: GalleryRef = this.gallery.ref(this.galleryId);
+    galleryRef.addImage({
+      src: '/assets/1.jpg',
+      title: 'Some title'
+    });
+    galleryRef.addImage({
+      src: '/assets/2.jpg',
+      title: 'Some title'
+    }); galleryRef.addImage({
+      src: '/assets/3.jpg',
+      title: 'Some title'
+    }); galleryRef.addImage({
+      src: '/assets/4.jpg',
+      title: 'Some title'
+    });
   }
 
   /**
@@ -65,4 +86,14 @@ export class RegisterComponent implements OnInit {
     this.dataLoaded = true;
   }
 
+  openAddressValidationDialog(): void {
+    const dialogRef = this.dialog.open(AddressDialogComponent, {
+      autoFocus: false,
+      restoreFocus: false
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      }
+    })
+  }
 }

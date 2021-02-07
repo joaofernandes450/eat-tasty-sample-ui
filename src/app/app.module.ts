@@ -18,9 +18,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatDialogModule } from '@angular/material/dialog';
 
 // Packages
 import { IvyCarouselModule } from 'angular-responsive-carousel';
+import { GalleryModule } from 'ng-gallery';
 
 // Google Maps
 import { AgmCoreModule } from '@agm/core';
@@ -35,6 +37,7 @@ import { UserHomepageComponent } from './components/user-homepage/user-homepage.
 import { AuthenticationGuard } from './guards/authentication/authentication.guard';
 import { RegisterComponent } from './components/register/register.component';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
+import { AddressDialogComponent } from './components/address-dialog/address-dialog.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +47,7 @@ import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/go
     LoginComponent,
     UserHomepageComponent,
     RegisterComponent,
+    AddressDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,6 +73,8 @@ import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/go
       libraries: ['places']
     }),
     MatGoogleMapsAutocompleteModule,
+    MatDialogModule,
+    GalleryModule
   ],
   providers: [AuthenticationGuard],
   bootstrap: [AppComponent]
