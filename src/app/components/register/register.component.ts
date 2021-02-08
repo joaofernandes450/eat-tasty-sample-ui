@@ -141,7 +141,9 @@ export class RegisterComponent implements OnInit {
     const dialogRef = this.dialog.open(AddressDialogComponent, {
       autoFocus: false,
       restoreFocus: false,
-      data: data
+      data: data,
+      width: '80vw',
+      maxWidth: '80vw',
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
