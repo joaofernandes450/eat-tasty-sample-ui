@@ -1,25 +1,12 @@
-<div class="register-div" style="min-height: 100vh">
-    <div class="flex-layout-register-div" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" *ngIf="dataLoaded">
-        <div fxFlex="50%" fxLayoutAlign=" stretch">
+<div class="register-div" style="height: 100%">
+    <div class="flex-layout-register-div" fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="10px" *ngIf="dataLoaded">
+        <div fxFlex="50%" fxLayoutAlign=" stretch" fxHide.lt-sm>
             <gallery id="gallery" [thumb]="false" [counter]="false" [autoPlay]="true" [dotsPosition]="top" [loop]="true"
                 [imageSize]="contain">
             </gallery>
-            <!-- <ng-template #thumbTemplate let-type="type">
-                <span *ngIf="type === 'youtube'" class="item-type">
-                    <fa-icon [icon]="youtubeIcon" size="lg"></fa-icon>
-                </span>
-                <span *ngIf="type === 'video'" class="item-type">
-                    <fa-icon [icon]="videoIcon" size="lg"></fa-icon>
-                </span>
-            </ng-template>
-            <ng-template #itemTemplate let-index="index" let-type="type" let-data="data" let-currIndex="currIndex">
-                <span *ngIf="type === 'image' && index === currIndex" [@slideAnimation] class="item-text">
-                    {{data?.title}}
-                </span>
-            </ng-template> -->
         </div>
-        <div class="register-form" fxLayoutAlign="center start">
-            <mat-horizontal-stepper linear #stepper>
+        <div class="register-form" fxFlex="50%" fxLayoutAlign="center start" fxFlex.lt-sm="100%">
+            <mat-horizontal-stepper linear labelPosition="bottom" #stepper>
                 <mat-step [stepControl]="registerFirstFormGroup" [editable]="false">
                     <form [formGroup]="registerFirstFormGroup">
                         <ng-template matStepLabel>Address validation</ng-template>
@@ -45,8 +32,8 @@
                     <form [formGroup]="registerSecondFormGroup">
                         <ng-template matStepLabel>Delivery Information</ng-template>
                         <h3> 2. Add your delivery place</h3>
-                        <div fxLayout fxLayoutGap="20px">
-                            <div fxFlex="50%">
+                        <div fxLayout fxLayout.lt-sm="column" fxLayoutGap="20px" fxLayoutGap.lt-sm="0px">
+                            <div fxFlex="50%" fxFlex.lt-sm="100%">
                                 <mat-label>Address</mat-label>
                                 <div class="grey-text">
                                     <h5>{{currentAddress ? currentAddress.street : ''}}</h5>
@@ -54,7 +41,7 @@
                                     </h5>
                                 </div>
                             </div>
-                            <div fxFlex="50%">
+                            <div fxFlex="50%" fxFlex.lt-sm="100%">
                                 <mat-label>Delivery Time</mat-label>
                                 <div class="grey-text">
                                     <h5>Lunch: 13:00 - 13:30</h5>
@@ -73,12 +60,14 @@
                                 <mat-radio-button class="example-margin" value="company">Company</mat-radio-button>
                             </mat-radio-group>
                         </div>
-                        <div fxLayout fxLayoutGap="20px">
-                            <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%">
+                        <div fxLayout fxLayout.lt-sm="column" fxLayoutGap="20px" fxLayoutGap.lt-sm="0px">
+                            <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%"
+                                fxFlex.lt-sm="100%">
                                 <mat-label>Floor</mat-label>
                                 <input matInput formControlName="floor">
                             </mat-form-field>
-                            <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%">
+                            <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%"
+                                fxFlex.lt-sm="100%">
                                 <mat-label>Other Information</mat-label>
                                 <input matInput formControlName="otherInfo">
                             </mat-form-field>
@@ -97,42 +86,50 @@
                     <form [formGroup]="registerThirdFormGroup">
                         <ng-template matStepLabel>Personal Information</ng-template>
                         <h3> 3. Add your personal information</h3>
-                        <div fxLayout fxLayoutGap="20px">
-                            <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%">
+                        <div fxLayout fxLayout.lt-sm="column" fxLayoutGap="20px" fxLayoutGap.lt-sm="0px">
+                            <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%"
+                                fxFlex.lt-sm="100%">
                                 <mat-label>First Name</mat-label>
                                 <input matInput formControlName="firstName" required>
                             </mat-form-field>
-                            <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%">
+                            <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%"
+                                fxFlex.lt-sm="100%">
                                 <mat-label>Last Name</mat-label>
                                 <input matInput formControlName="lastName" required>
                             </mat-form-field>
                         </div>
-                        <div fxLayout fxLayoutGap="20px">
-                            <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%">
+                        <div fxLayout fxLayout.lt-sm="column" fxLayoutGap="20px" fxLayoutGap.lt-sm="0px">
+                            <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%"
+                                fxFlex.lt-sm="100%">
                                 <mat-label>Email</mat-label>
                                 <input matInput formControlName="email" required>
                             </mat-form-field>
-                            <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%">
+                            <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%"
+                                fxFlex.lt-sm="100%">
                                 <mat-label>Phone Number</mat-label>
                                 <input matInput formControlName="phoneNumber" required>
                             </mat-form-field>
                         </div>
-                        <div fxLayout fxLayoutGap="20px">
-                            <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%">
+                        <div fxLayout fxLayout.lt-sm="column" fxLayoutGap="20px" fxLayoutGap.lt-sm="0px">
+                            <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%"
+                                fxFlex.lt-sm="100%">
                                 <mat-label>Password</mat-label>
                                 <input matInput formControlName="password" required>
                             </mat-form-field>
-                            <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%">
+                            <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%"
+                                fxFlex.lt-sm="100%">
                                 <mat-label>Confirm Password</mat-label>
                                 <input matInput formControlName="confirmPassword" required>
                             </mat-form-field>
                         </div>
-                        <div fxLayout fxLayoutGap="20px">
-                            <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%">
+                        <div fxLayout fxLayout.lt-sm="column" fxLayoutGap="20px" fxLayoutGap.lt-sm="0px">
+                            <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%"
+                                fxFlex.lt-sm="100%">
                                 <mat-label>VAT</mat-label>
                                 <input matInput formControlName="vat">
                             </mat-form-field>
-                            <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%">
+                            <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%"
+                                fxFlex.lt-sm="100%">
                                 <mat-label>Country</mat-label>
                                 <mat-select formControlName="country" required>
                                     <mat-option *ngFor="let c of availableCountriesList" [value]="c">
@@ -141,16 +138,18 @@
                                 </mat-select>
                             </mat-form-field>
                         </div>
-                        <mat-checkbox color="primary" [checked]="true">
-                            I wish to receive the menu, promotions, special offers and other information
-                        </mat-checkbox>
-                        <p>
-                        </p>
-                        <mat-checkbox #termsOfService color="primary">I have read and agreed with the
-                            <span class="link-underline"
-                                (click)="openTermsOfServiceDialog($event, termsOfService)">Terms of
-                                Service</span>
-                        </mat-checkbox>
+                        <div fxLayout="column" fxLayoutGap="20px" style="margin-bottom: 1.34375em">
+                            <mat-checkbox color="primary" [checked]="true">
+                                I wish to receive the menu, promotions, special offers and other information
+                            </mat-checkbox>
+                            <p>
+                            </p>
+                            <mat-checkbox #termsOfService color="primary">I have read and agreed with the
+                                <span class="link-underline"
+                                    (click)="openTermsOfServiceDialog($event, termsOfService)">Terms of
+                                    Service</span>
+                            </mat-checkbox>
+                        </div>
                         <div class="button-right-align">
                             <button mat-raised-button color="accent" matStepperPrevious>Back</button>
                             <button mat-raised-button color="primary">Done</button>
