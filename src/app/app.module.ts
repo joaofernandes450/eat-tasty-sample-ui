@@ -20,6 +20,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material/select';
 
 // Packages
 import { IvyCarouselModule } from 'angular-responsive-carousel';
@@ -76,7 +77,8 @@ import { AddressDialogComponent } from './components/address-dialog/address-dial
     MatGoogleMapsAutocompleteModule,
     MatDialogModule,
     GalleryModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatSelectModule
   ],
   providers: [AuthenticationGuard],
   bootstrap: [AppComponent]

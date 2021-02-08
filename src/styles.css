@@ -20,3 +20,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .button-right-align button {
     margin-left: 16px;
 }
+
+.grey-text {
+    color: grey;
+}

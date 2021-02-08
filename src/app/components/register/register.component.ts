@@ -1,15 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { filter, map, startWith } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { AddressDialogComponent } from '../address-dialog/address-dialog.component';
 
 import { Gallery, GalleryRef } from 'ng-gallery';
+import { DataService } from 'src/app/services/data/data.service';
 
 export class CustomValidators {
   static phoneNumber(): ValidatorFn {
     return Validators.pattern("^9{1,2,3,6}[0-9]{8}$")
+  }
+
+  static valueSelected(addressOptionsArray: any[]): ValidatorFn {
+    return (c: AbstractControl): { [key: string]: boolean } | null => {
+      let value = c.value;
+      let isValueAnAddress = addressOptionsArray.includes(value);
+      if (isValueAnAddress) {
+        return null;
+      } else {
+        return { match: true };
+      }
+    };
   }
 }
 
@@ -34,7 +47,7 @@ export class RegisterComponent implements OnInit {
   registerSecondFormGroup: FormGroup;
   registerThirdFormGroup: FormGroup;
 
-  galleryId = 'mixedExample';
+  galleryId = 'gallery';
 
   addressOptions: Address[] = [
     { street: "Rua Irene Lisboa", postalCode: "2650-234", city: "Amadora", latitude: 38.768317, longitude: -9.219275 },
@@ -42,11 +55,17 @@ export class RegisterComponent implements OnInit {
     { street: "Rua Nova da Alfândega", postalCode: "80-182", city: "Porto", latitude: 41.144041, longitude: -8.622909 },
   ]
   filteredOptions: Observable<Address[]>;
+  currentAddress: Address;
 
-  constructor(private fb: FormBuilder, private dialog: MatDialog, private gallery: Gallery) { }
+  isFirstFormGroupValid: boolean = false;
+
+  availableCountriesList: string[] = [];
+
+  constructor(private fb: FormBuilder, private dialog: MatDialog, private gallery: Gallery, private dataService: DataService) { }
 
   ngOnInit(): void {
     this.createRegisterForm();
+    this.getAvailableCountriesList();
     this.renderGallery();
     this.filteredOptions = this.registerFirstFormGroup.get('verifyAddress').valueChanges
       .pipe(
@@ -60,7 +79,7 @@ export class RegisterComponent implements OnInit {
    */
   createRegisterForm(): void {
     this.registerFirstFormGroup = this.fb.group({
-      verifyAddress: ['', Validators.required],
+      verifyAddress: ['', [Validators.required, CustomValidators.valueSelected(this.addressOptions)]],
     })
     this.registerSecondFormGroup = this.fb.group({
       delivery: ['',],
@@ -81,6 +100,10 @@ export class RegisterComponent implements OnInit {
     })
   }
 
+  getAvailableCountriesList(): void {
+    this.availableCountriesList = this.dataService.getCountries();
+  }
+
   /**
    * Opens Address Validation Dialog when prompted
    */
@@ -92,8 +115,12 @@ export class RegisterComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.isFirstFormGroupValid = true;
+        this.currentAddress = data;
       } else {
+        this.isFirstFormGroupValid = false;
         this.registerFirstFormGroup.reset();
+        this.currentAddress = null;
       }
     })
   }
@@ -126,9 +153,10 @@ export class RegisterComponent implements OnInit {
    */
   private _filter(value: any): Address[] {
     if (value && !value.city) {
-      console.log(value)
       const filterValue = value.toLowerCase();
       return this.addressOptions.filter(option => option.city.toLocaleLowerCase().includes(filterValue) || option.postalCode.toLocaleLowerCase().includes(filterValue) || option.street.toLocaleLowerCase().includes(filterValue));
+    } else {
+      return this.addressOptions;
     }
   }
 
@@ -138,5 +166,14 @@ export class RegisterComponent implements OnInit {
    */
   autoCompleteEvent(event: any) {
     this.openAddressValidationDialog(event.option.value);
+  }
+
+  /**
+   * Returns the autocomplete option selected text, to prvent [object object] from showing
+   * @param option 
+   */
+  getOptionText(option): string {
+    if (option) return option.street + ', ' + option.city + ' : ' + option.postalCode;
+
   }
 }
