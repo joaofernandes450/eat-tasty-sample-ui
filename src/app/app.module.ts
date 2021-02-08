@@ -19,6 +19,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 // Packages
 import { IvyCarouselModule } from 'angular-responsive-carousel';
@@ -74,7 +75,8 @@ import { AddressDialogComponent } from './components/address-dialog/address-dial
     }),
     MatGoogleMapsAutocompleteModule,
     MatDialogModule,
-    GalleryModule
+    GalleryModule,
+    MatAutocompleteModule
   ],
   providers: [AuthenticationGuard],
   bootstrap: [AppComponent]

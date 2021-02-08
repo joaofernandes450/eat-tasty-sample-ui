@@ -1,0 +1,10 @@
+<div mat-dialog-title>
+    <h3>Please confirm your address on the map</h3>
+</div>
+<div mat-dialog-content>
+    <div id="map" class="map"></div>
+</div>
+<div mat-dialog-actions class="button-right-align">
+    <button mat-raised-button color="warn">Cancel</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>Confirm Address</button>
+</div>

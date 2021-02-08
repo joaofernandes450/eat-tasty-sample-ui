@@ -1,8 +1,8 @@
 <div class="register-div" style="min-height: 100vh">
     <div class="flex-layout-register-div" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" *ngIf="dataLoaded">
         <div fxFlex="50%" fxLayoutAlign=" stretch">
-            <gallery id="mixedExample" [thumb]="false" [counter]="false" [autoPlay]="true"
-                [dotsPosition]="top" [loop]="true" [imageSize]="contain">
+            <gallery id="mixedExample" [thumb]="false" [counter]="false" [autoPlay]="true" [dotsPosition]="top"
+                [loop]="true" [imageSize]="contain">
             </gallery>
             <!-- <ng-template #thumbTemplate let-type="type">
                 <span *ngIf="type === 'youtube'" class="item-type">
@@ -28,16 +28,23 @@
                         </h3>
                         <mat-form-field class="form-field-full-width" appearance="outline">
                             <mat-label>Address</mat-label>
+                            <input matInput formControlName="verifyAddress" [matAutocomplete]="auto">
+                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="autoCompleteEvent($event)">
+                                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                    {{option.street + ', ' + option.city + ' : ' + option.postalCode}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                        <!-- <mat-form-field class="form-field-full-width" appearance="outline">
+                            <mat-label>Address</mat-label>
                             <input matInput formControlName="verifyAddress" required>
                         </mat-form-field>
                         <mat-error
                             *ngIf="registerFirstFormGroup.controls.verifyAddress.invalid && registerFirstFormGroup.controls.verifyAddress.errors.required">
                             Address is <strong>required</strong>!
-                        </mat-error>
+                        </mat-error> -->
                         <div class="button-right-align">
                             <button mat-raised-button color="primary" (click)="onNext(stepper)">Next</button>
-                            <button mat-raised-button color="warn" type="button"
-                                (click)="openAddressValidationDialog()">T</button>
                         </div>
                     </form>
                 </mat-step>
