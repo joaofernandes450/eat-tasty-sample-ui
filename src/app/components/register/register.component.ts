@@ -7,6 +7,7 @@ import { AddressDialogComponent } from '../address-dialog/address-dialog.compone
 
 import { Gallery, GalleryRef } from 'ng-gallery';
 import { DataService } from 'src/app/services/data/data.service';
+import { LoadingService } from 'src/app/services/loading/loading.service';
 
 export class CustomValidators {
 
@@ -92,7 +93,7 @@ export class RegisterComponent implements OnInit {
 
   doneButtonPressed: boolean = false;
 
-  constructor(private fb: FormBuilder, private dialog: MatDialog, private gallery: Gallery, private dataService: DataService) { }
+  constructor(private fb: FormBuilder, private dialog: MatDialog, private gallery: Gallery, private dataService: DataService, private loadingService: LoadingService) { }
 
   ngOnInit(): void {
     this.createRegisterForm();
@@ -122,7 +123,7 @@ export class RegisterComponent implements OnInit {
     this.registerThirdFormGroup = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]],
+      email: ['', [Validators.required, CustomValidators.email()]],
       phoneNumber: ['', [Validators.required, CustomValidators.phoneNumber()]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(24)]],
       confirmPassword: ['', Validators.required],
@@ -216,6 +217,10 @@ export class RegisterComponent implements OnInit {
    */
   registerUser(): void {
     this.doneButtonPressed = true;
+    this.loadingService.showLoadingSpinner();
+    setTimeout(() => {
+      this.loadingService.stopLoadingSpinner();
+    }, 5000)
   }
 
   /**

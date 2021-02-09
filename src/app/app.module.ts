@@ -22,6 +22,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 // Packages
 import { IvyCarouselModule } from 'angular-responsive-carousel';
@@ -41,6 +42,7 @@ import { AuthenticationGuard } from './guards/authentication/authentication.guar
 import { RegisterComponent } from './components/register/register.component';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { AddressDialogComponent } from './components/address-dialog/address-dialog.component';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import { AddressDialogComponent } from './components/address-dialog/address-dial
     UserHomepageComponent,
     RegisterComponent,
     AddressDialogComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -80,7 +83,8 @@ import { AddressDialogComponent } from './components/address-dialog/address-dial
     GalleryModule,
     MatAutocompleteModule,
     MatSelectModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatProgressSpinnerModule
   ],
   providers: [AuthenticationGuard],
   bootstrap: [AppComponent]
