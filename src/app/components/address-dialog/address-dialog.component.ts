@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+/** OpenLayers */
 import Map from 'ol/Map';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
@@ -11,7 +12,6 @@ import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
 import { Feature } from 'ol';
 import { Fill, Icon, Stroke, Style, Text } from 'ol/style';
-import TileJSON from 'ol/source/TileJSON';
 
 @Component({
   selector: 'app-address-dialog',
@@ -37,7 +37,6 @@ export class AddressDialogComponent implements AfterViewInit {
       new Style({
         image: new Icon({
           crossOrigin: 'anonymous',
-          // For Internet Explorer 11
           src: 'assets/marker3.png',
           scale: 0.09
         }),

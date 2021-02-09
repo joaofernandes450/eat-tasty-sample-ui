@@ -22,6 +22,9 @@
                                     {{option.street + ', ' + option.city + ' : ' + option.postalCode}}
                                 </mat-option>
                             </mat-autocomplete>
+                            <mat-error *ngIf="registerFirstFormGroup.controls.verifyAddress.invalid">
+                                Please select a valid option!
+                            </mat-error>
                         </mat-form-field>
                         <div class="button-right-align">
                             <button mat-raised-button color="primary" matStepperNext>Next</button>
@@ -52,6 +55,9 @@
                         <mat-form-field class="form-field-full-width" appearance="outline">
                             <mat-label>Name of the Delivery Place</mat-label>
                             <input matInput formControlName="delivery" required>
+                            <mat-error *ngIf="registerSecondFormGroup.controls.delivery.invalid">
+                                This field is required!
+                            </mat-error>
                         </mat-form-field>
                         <div style="margin-bottom: 1.34375em">
                             <mat-radio-group formControlName="deliveryType">
@@ -83,7 +89,7 @@
                     </form>
                 </mat-step>
                 <mat-step [stepControl]="registerThirdFormGroup" [editable]="false">
-                    <form [formGroup]="registerThirdFormGroup">
+                    <form [formGroup]="registerThirdFormGroup" (ngSubmit)="registerUser()">
                         <ng-template matStepLabel>Personal Information</ng-template>
                         <h3> 3. Add your personal information</h3>
                         <div fxLayout fxLayout.lt-sm="column" fxLayoutGap="20px" fxLayoutGap.lt-sm="0px">
@@ -91,11 +97,17 @@
                                 fxFlex.lt-sm="100%">
                                 <mat-label>First Name</mat-label>
                                 <input matInput formControlName="firstName" required>
+                                <mat-error *ngIf="registerThirdFormGroup.controls.firstName.invalid">
+                                    This field is required!
+                                </mat-error>
                             </mat-form-field>
                             <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%"
                                 fxFlex.lt-sm="100%">
                                 <mat-label>Last Name</mat-label>
                                 <input matInput formControlName="lastName" required>
+                                <mat-error *ngIf="registerThirdFormGroup.controls.lastName.invalid">
+                                    This field is required!
+                                </mat-error>
                             </mat-form-field>
                         </div>
                         <div fxLayout fxLayout.lt-sm="column" fxLayoutGap="20px" fxLayoutGap.lt-sm="0px">
@@ -103,23 +115,59 @@
                                 fxFlex.lt-sm="100%">
                                 <mat-label>Email</mat-label>
                                 <input matInput formControlName="email" required>
+                                <mat-error
+                                    *ngIf="registerThirdFormGroup.controls.email.invalid && registerThirdFormGroup.controls.email.errors.required">
+                                    This field is required!
+                                </mat-error>
+                                <mat-error
+                                    *ngIf="registerThirdFormGroup.controls.email.invalid && registerThirdFormGroup.controls.email.errors.pattern">
+                                    Please enter a valid email address!
+                                </mat-error>
                             </mat-form-field>
                             <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%"
                                 fxFlex.lt-sm="100%">
                                 <mat-label>Phone Number</mat-label>
                                 <input matInput formControlName="phoneNumber" required>
+                                <mat-error
+                                    *ngIf="registerThirdFormGroup.controls.phoneNumber.invalid && registerThirdFormGroup.controls.phoneNumber.errors.required">
+                                    This field is required!
+                                </mat-error>
+                                <mat-error
+                                    *ngIf="registerThirdFormGroup.controls.phoneNumber.invalid && registerThirdFormGroup.controls.phoneNumber.errors.pattern">
+                                    Please enter a valid phone number!
+                                </mat-error>
                             </mat-form-field>
                         </div>
                         <div fxLayout fxLayout.lt-sm="column" fxLayoutGap="20px" fxLayoutGap.lt-sm="0px">
                             <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%"
                                 fxFlex.lt-sm="100%">
                                 <mat-label>Password</mat-label>
-                                <input matInput formControlName="password" required>
+                                <input matInput formControlName="password" type="password" required>
+                                <mat-error
+                                    *ngIf="registerThirdFormGroup.controls.password.invalid && registerThirdFormGroup.controls.password.errors.required">
+                                    This field is required!
+                                </mat-error>
+                                <mat-error
+                                    *ngIf="registerThirdFormGroup.controls.password.invalid && registerThirdFormGroup.controls.password.errors.minlength">
+                                    Password should have at least 6 characters!
+                                </mat-error>
+                                <mat-error
+                                    *ngIf="registerThirdFormGroup.controls.password.invalid && registerThirdFormGroup.controls.password.errors.maxlength">
+                                    Password should have fewer than 24!
+                                </mat-error>
                             </mat-form-field>
                             <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%"
                                 fxFlex.lt-sm="100%">
                                 <mat-label>Confirm Password</mat-label>
-                                <input matInput formControlName="confirmPassword" required>
+                                <input matInput formControlName="confirmPassword" type="password" required>
+                                <mat-error
+                                    *ngIf="registerThirdFormGroup.controls.confirmPassword.invalid && registerThirdFormGroup.controls.confirmPassword.errors.required">
+                                    This field is required!
+                                </mat-error>
+                                <mat-error
+                                    *ngIf="registerThirdFormGroup.controls.confirmPassword.invalid && registerThirdFormGroup.controls.confirmPassword.errors.passwordDoNotMatch">
+                                    Passwords do not match!
+                                </mat-error>
                             </mat-form-field>
                         </div>
                         <div fxLayout fxLayout.lt-sm="column" fxLayoutGap="20px" fxLayoutGap.lt-sm="0px">
@@ -140,19 +188,24 @@
                         </div>
                         <div fxLayout="column" fxLayoutGap="20px" style="margin-bottom: 1.34375em">
                             <mat-checkbox color="primary" [checked]="true">
-                                I wish to receive the menu, promotions, special offers and other information
+                                I wish to receive the menu, promotions, special offers and other information!
                             </mat-checkbox>
                             <p>
                             </p>
-                            <mat-checkbox #termsOfService color="primary">I have read and agreed with the
+                            <mat-checkbox #termsOfService color="primary" formControlName="tos">I have read and
+                                agreed
+                                with the
                                 <span class="link-underline"
                                     (click)="openTermsOfServiceDialog($event, termsOfService)">Terms of
-                                    Service</span>
+                                    Service!</span>
                             </mat-checkbox>
+                            <mat-error *ngIf="doneButtonPressed && !termsOfService.checked">
+                                {{termsOfServiceErrorMessage()}}
+                            </mat-error>
                         </div>
                         <div class="button-right-align">
                             <button mat-raised-button color="accent" matStepperPrevious>Back</button>
-                            <button mat-raised-button color="primary">Done</button>
+                            <button mat-raised-button color="primary">Register</button>
                         </div>
                     </form>
                 </mat-step>

@@ -21,6 +21,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 // Packages
 import { IvyCarouselModule } from 'angular-responsive-carousel';
@@ -78,7 +79,8 @@ import { AddressDialogComponent } from './components/address-dialog/address-dial
     MatDialogModule,
     GalleryModule,
     MatAutocompleteModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTooltipModule
   ],
   providers: [AuthenticationGuard],
   bootstrap: [AppComponent]

@@ -42,7 +42,7 @@ export class CustomValidators {
 
   /**
    * Password and confirm password match validator
-   * @param control 
+   * @param control - Angular's form AbstractControl
    */
   static passwordMatch(control: AbstractControl) {
     const password: string = control.get('password').value;
@@ -90,6 +90,8 @@ export class RegisterComponent implements OnInit {
 
   availableCountriesList: string[] = [];
 
+  doneButtonPressed: boolean = false;
+
   constructor(private fb: FormBuilder, private dialog: MatDialog, private gallery: Gallery, private dataService: DataService) { }
 
   ngOnInit(): void {
@@ -120,12 +122,13 @@ export class RegisterComponent implements OnInit {
     this.registerThirdFormGroup = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', [Validators.required, CustomValidators.email()]],
+      email: ['', [Validators.required, Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]],
       phoneNumber: ['', [Validators.required, CustomValidators.phoneNumber()]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(24)]],
       confirmPassword: ['', Validators.required],
       vat: [''],
-      country: ['Portugal', Validators.required]
+      country: ['Portugal', Validators.required],
+      tos: [false, Validators.requiredTrue]
     },
       { validator: CustomValidators.passwordMatch })
   }
@@ -206,6 +209,19 @@ export class RegisterComponent implements OnInit {
    */
   getOptionText(option): string {
     if (option) return option.street + ', ' + option.city + ' : ' + option.postalCode;
+  }
 
+  /**
+   * Called when User presses the "Register" button
+   */
+  registerUser(): void {
+    this.doneButtonPressed = true;
+  }
+
+  /**
+   * Returns terms of service error message
+   */
+  termsOfServiceErrorMessage(): string {
+    return 'Please accept the terms of service before proceding!'
   }
 }

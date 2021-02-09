@@ -5,6 +5,6 @@
     <div id="map" class="map"></div>
 </div>
 <div mat-dialog-actions align="end">
-    <button mat-raised-button color="warn">Cancel</button>
+    <button mat-raised-button color="warn" [mat-dialog-close]="false">Close</button>
     <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>Confirm Address</button>
 </div>
