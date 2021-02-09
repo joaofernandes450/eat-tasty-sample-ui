@@ -8,6 +8,8 @@ import { AddressDialogComponent } from '../address-dialog/address-dialog.compone
 import { Gallery, GalleryRef } from 'ng-gallery';
 import { DataService } from 'src/app/services/data/data.service';
 import { LoadingService } from 'src/app/services/loading/loading.service';
+import { Router } from '@angular/router';
+import { NotificationSnackbarService } from 'src/app/services/notification-snackbar/notification-snackbar.service';
 
 export class CustomValidators {
 
@@ -93,7 +95,7 @@ export class RegisterComponent implements OnInit {
 
   doneButtonPressed: boolean = false;
 
-  constructor(private fb: FormBuilder, private dialog: MatDialog, private gallery: Gallery, private dataService: DataService, private loadingService: LoadingService) { }
+  constructor(private fb: FormBuilder, private dialog: MatDialog, private gallery: Gallery, private dataService: DataService, private loadingService: LoadingService, private router: Router, private notificationService: NotificationSnackbarService) { }
 
   ngOnInit(): void {
     this.createRegisterForm();
@@ -217,10 +219,14 @@ export class RegisterComponent implements OnInit {
    */
   registerUser(): void {
     this.doneButtonPressed = true;
-    this.loadingService.showLoadingSpinner();
-    setTimeout(() => {
-      this.loadingService.stopLoadingSpinner();
-    }, 5000)
+    if (this.registerThirdFormGroup.valid) {
+      this.loadingService.showLoadingSpinner();
+      setTimeout(() => {
+        this.loadingService.stopLoadingSpinner();
+        this.notificationService.showSuccess('Welcome to EatTasty. You can now login using your credentials!')
+        this.router.navigate(['/login']);
+      }, 5000)
+    }
   }
 
   /**

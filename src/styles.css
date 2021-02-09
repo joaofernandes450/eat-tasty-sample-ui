@@ -27,4 +27,22 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .mat-checkbox-layout {
     white-space: normal !important;
-  }
+}
+
+.snackbar-success {
+    background-color: green;
+    color: white;
+}
+
+.snackbar-success button {
+    color: white;
+}
+
+.snackbar-error {
+    background-color: red;
+    color: white;
+}
+
+.snackbar-error button {
+    color: white;
+}

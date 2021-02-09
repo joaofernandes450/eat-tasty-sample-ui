@@ -23,6 +23,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 // Packages
 import { IvyCarouselModule } from 'angular-responsive-carousel';
@@ -84,7 +85,8 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
     MatAutocompleteModule,
     MatSelectModule,
     MatTooltipModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSnackBarModule
   ],
   providers: [AuthenticationGuard],
   bootstrap: [AppComponent]

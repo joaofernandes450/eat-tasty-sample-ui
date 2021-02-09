@@ -1,6 +1,6 @@
 <div class="navigation-toolbar-div">
     <mat-toolbar class="fixed-navigation-bar" color="primary">
-        <span routerLink="/home">Eat Tasty</span>
+        <span routerLink="/">EatTasty</span>
         <span class="example-spacer"></span>
         <div class="not-logged-buttons" *ngIf="!userInfo">
             <button mat-button routerLink="/login">Sign
@@ -17,6 +17,5 @@
 
     <div class="main-container">
         <router-outlet></router-outlet>
-        <app-loading-spinner></app-loading-spinner>
     </div>
 </div>
