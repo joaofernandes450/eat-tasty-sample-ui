@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Gallery, GalleryRef } from 'ng-gallery';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { CustomValidators } from 'src/app/utils/custom-validators';
 
 @Component({
   selector: 'app-login',
@@ -10,16 +12,21 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 })
 export class LoginComponent implements OnInit {
 
+  dataLoaded: boolean = false;
+
   loginForm: FormGroup;
 
   hidePassword: boolean = true;
   recoverPassword: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router, private authenticationService: AuthenticationService) {
+  galleryId = 'gallery';
+
+  constructor(private fb: FormBuilder, private router: Router, private authenticationService: AuthenticationService, private gallery: Gallery) {
   }
 
   ngOnInit(): void {
     this.createLoginForm();
+    this.renderGallery();
   }
 
   /**
@@ -27,9 +34,32 @@ export class LoginComponent implements OnInit {
    */
   createLoginForm(): void {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]],
-      password: ['', Validators.required]
+      email: ['', [Validators.required, CustomValidators.email()]],
+      password: ['', [Validators.required]]
     })
+  }
+
+  /**
+ * Handles the Image Gallery configuration
+ */
+  renderGallery(): void {
+    const galleryRef: GalleryRef = this.gallery.ref(this.galleryId);
+    galleryRef.addImage({
+      src: '/assets/1.jpg',
+      title: 'Some title'
+    });
+    galleryRef.addImage({
+      src: '/assets/2.jpg',
+      title: 'Some title'
+    }); galleryRef.addImage({
+      src: '/assets/3.jpg',
+      title: 'Some title'
+    }); galleryRef.addImage({
+      src: '/assets/4.jpg',
+      title: 'Some title'
+    });
+    console.log(galleryRef)
+    this.dataLoaded = true;
   }
 
   /**
