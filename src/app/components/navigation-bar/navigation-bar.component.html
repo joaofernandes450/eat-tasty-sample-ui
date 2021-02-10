@@ -9,8 +9,15 @@
                 up</button>
         </div>
         <div class="logged-in-buttons" *ngIf="userInfo">
-            <button mat-button (click)="userLogout()">Sign out
-                <mat-icon>directions_run</mat-icon>
+            <button mat-button [matMenuTriggerFor]="cartMenu">
+                <mat-icon matBadge="2" matBadgeColor="warn" matBadgeOverlap="false" matBadgeSize="small">shopping_cart
+                </mat-icon>
+            </button>
+            <mat-menu #cartMenu="matMenu">
+                <app-shopping-cart (click)="$event.stopPropagation()"></app-shopping-cart>
+            </mat-menu>
+            <button mat-button (click)="userLogout()">
+                <mat-icon>logout</mat-icon>
             </button>
         </div>
     </mat-toolbar>

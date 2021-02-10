@@ -26,6 +26,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
+import { MatBadgeModule } from '@angular/material/badge';
 
 // Packages
 import { IvyCarouselModule } from 'angular-responsive-carousel';
@@ -50,6 +51,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FoodInfoComponent } from './components/food-info/food-info.component';
+import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,7 @@ import { FoodInfoComponent } from './components/food-info/food-info.component';
     AddressDialogComponent,
     LoadingSpinnerComponent,
     FoodInfoComponent,
+    ShoppingCartComponent,
   ],
   imports: [
     BrowserModule,
@@ -98,7 +101,8 @@ import { FoodInfoComponent } from './components/food-info/food-info.component';
     MatCardModule,
     LayoutModule,
     MatTabsModule,
-    MatTableModule
+    MatTableModule,
+    MatBadgeModule
   ],
   providers: [AuthenticationGuard],
   bootstrap: [AppComponent]

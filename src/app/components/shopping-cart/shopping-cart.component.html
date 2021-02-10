@@ -1,0 +1,55 @@
+<div class="shopping-cart" fxLayout="column">
+    <h2 style="text-align: center;">Shopping Cart</h2>
+    <div class="shopping-cart-container" fxFlex fxLayoutGap="20px">
+        <table mat-table [dataSource]="shoppingData" class="mat-elevation-z0">
+
+            <ng-container matColumnDef="Product">
+                <th mat-header-cell *matHeaderCellDef>Product</th>
+                <td mat-cell *matCellDef="let element">
+                    <div fxLayout fxLayoutGap="10px" fxLayoutAlign="center center">
+                        <div fxFlex="50%">
+                            <img src="{{element.image}}">
+                        </div>
+                        <div fxFlex>
+                            {{element.name}}
+                        </div>
+                    </div>
+                </td>
+                <td mat-footer-cell *matFooterCellDef> Total </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Quantity">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;">Quantity</th>
+                <td mat-cell *matCellDef="let element">
+                    <div fxLayout fxLayoutAlign="center center">
+                        <button mat-icon-button style="color:grey" (click)="removeQuantity(element)"
+                            *ngIf="element.quantity > 1">
+                            <mat-icon>remove</mat-icon>
+                        </button>
+                        <div>
+                            {{element.quantity}}
+                        </div>
+                        <button mat-icon-button style="color: green;" (click)="addQuantity(element)">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </div>
+                </td>
+                <td mat-footer-cell *matFooterCellDef style="text-align: center;"> {{totalQuantity()}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Actions">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;">Actions</th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button style="color: red;" (click)="removeProduct(element)">
+                        <mat-icon>clear</mat-icon>
+                    </button>
+                </td>
+                <td mat-footer-cell *matFooterCellDef style="text-align: center;"> {{totalCost() | currency}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columnHeaders" class="first-table-row"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnHeaders;" class="table-row"></tr>
+            <tr mat-footer-row *matFooterRowDef="columnHeaders" class="footer-table-row"></tr>
+        </table>
+    </div>
+</div>
