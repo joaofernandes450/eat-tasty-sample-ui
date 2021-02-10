@@ -31,7 +31,7 @@ export class AuthenticationService {
   userLogin(email: string, password: string): Observable<Result> {
     return new Observable<Result>(observer => {
       this.userInfo = {
-        tokenExp: new Date(new Date().getTime() + (10 * 60 * 1000)) //10min for now
+        tokenExp: new Date(new Date().getTime() + (300 * 60 * 1000)) //10min for now
       }
       localStorage.setItem('userInfo', JSON.stringify(this.userInfo));
       this.authenticationSubject.next(this.userInfo);

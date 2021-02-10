@@ -1,0 +1,77 @@
+<div class="food-info-div" style="height: 100%;" *ngIf="dataLoaded">
+    <div class="top-bar" style="text-align: center;">
+        <form [formGroup]="searchFormGroup">
+            <mat-form-field appearance="outline" class="search-input">
+                <mat-label>Search keyword (Name or Ingredients)</mat-label>
+                <input matInput formControlName="search">
+            </mat-form-field>
+        </form>
+    </div>
+    <div class="food-info" fxLayout="column" fxLayoutAlign="space-around center" fxLayoutGap="20px">
+        <mat-card *ngFor="let c of filteredFoodCards | async; let i = index">
+            <mat-card-header>
+                <mat-card-title>{{c.title}}{{c.weight ? ' ( ' + c.weight + ' g ) ' : ''}}</mat-card-title>
+                <mat-card-subtitle>{{c.description}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content fxLayout="column">
+                <div class="food-image">
+                    <img src="{{c.image}}">
+                </div>
+                <div style="text-align: end; margin-top: 20px;">
+                    <button #info mat-button (click)=expandNutricional(c)>
+                        <mat-icon>expand_more</mat-icon>Nutricional Info
+                    </button>
+                </div>
+                <mat-tab-group *ngIf="c.expandNutricional">
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            Ingredients
+                        </ng-template>
+                        <mat-list>
+                            <mat-list-item *ngFor="let ing of c.ingredients">
+                                <mat-icon matListIcon>menu_book</mat-icon> {{ing}}
+                            </mat-list-item>
+                        </mat-list>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            Nutricional
+                        </ng-template>
+                        <table mat-table [dataSource]="dataSource.data[i]" class="mat-elevation-z8">
+
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef></th>
+                                <td mat-cell *matCellDef="let element; let p = index"
+                                    [ngClass]="{'indent-text-table': p == 3 || p == 5}"> {{nutricionalNames[p]}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="baseValue">
+                                <th mat-header-cell *matHeaderCellDef> 100g </th>
+                                <td mat-cell *matCellDef="let element"> {{element.baseValue | number: '1.0-1'}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="baseValueCalculated">
+                                <th mat-header-cell *matHeaderCellDef> {{c.weight}}g </th>
+                                <td mat-cell *matCellDef="let element" justify="end"> {{element.baseValueCalculated |
+                                    number: '1.0-1'}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="disclaimer">
+                                <td mat-footer-cell *matFooterCellDef>
+                                    * Reference dose for an average adult (2000 kcal / 8400 kJ)
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="columnHeaders" class="first-table-row"></tr>
+                            <tr mat-row *matRowDef="let row; columns: columnHeaders;" class="table-row"></tr>
+
+                            <tr mat-footer-row *matFooterRowDef="['disclaimer']" class="footer-table-row"></tr>
+                        </table>
+                    </mat-tab>
+                </mat-tab-group>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

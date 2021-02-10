@@ -24,6 +24,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTableModule } from '@angular/material/table';
 
 // Packages
 import { IvyCarouselModule } from 'angular-responsive-carousel';
@@ -44,6 +46,10 @@ import { RegisterComponent } from './components/register/register.component';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { AddressDialogComponent } from './components/address-dialog/address-dialog.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { LayoutModule } from '@angular/cdk/layout';
+import { FoodInfoComponent } from './components/food-info/food-info.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +61,7 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
     RegisterComponent,
     AddressDialogComponent,
     LoadingSpinnerComponent,
+    FoodInfoComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,7 +93,12 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
     MatSelectModule,
     MatTooltipModule,
     MatProgressSpinnerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatGridListModule,
+    MatCardModule,
+    LayoutModule,
+    MatTabsModule,
+    MatTableModule
   ],
   providers: [AuthenticationGuard],
   bootstrap: [AppComponent]

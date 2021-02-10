@@ -7,6 +7,7 @@ import { HomepageComponent } from './components/homepage/homepage.component';
 import { LoginComponent } from './components/login/login.component';
 import { UserHomepageComponent } from './components/user-homepage/user-homepage.component';
 import { RegisterComponent } from './components/register/register.component';
+import { FoodInfoComponent } from './components/food-info/food-info.component';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
@@ -15,7 +16,8 @@ const routes: Routes = [
   {
     path: 'app',
     children: [
-      { path: 'home', component: UserHomepageComponent, canActivate: [AuthenticationGuard] }
+      { path: 'home', component: UserHomepageComponent, canActivate: [AuthenticationGuard] },
+      { path: 'food/:type', component: FoodInfoComponent, canActivate: [AuthenticationGuard] }
     ]
   }
 ];

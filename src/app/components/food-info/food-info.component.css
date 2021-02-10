@@ -1,0 +1,42 @@
+table {
+    width: 100%;
+  }
+
+  .first-table-row th {
+    border-bottom: none;
+  }
+
+  .footer-table-row td {
+      border-bottom: none;
+      color: grey;
+      font-size: 12px;
+  }
+
+  .indent-text-table {
+      text-indent: 20px;
+      color: grey;
+      font-size: 12px;
+  }
+
+  .search-input {
+      width: 25%;
+  }
+
+  @media only screen and (max-width: 599px){
+    mat-card{
+      width: 100% !important;
+    }
+
+    mat-card img {
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .food-info {
+        margin: 5%;
+    }
+
+    .search-input{
+        width: 80%;
+    }
+  }
