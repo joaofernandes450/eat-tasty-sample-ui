@@ -107,7 +107,8 @@ export class AuthenticationService {
    */
   hasTokenExpired(): boolean {
     if (!this.userInfo) return true;
-    const date = new Date(this.userInfo.tokenExp);
+    const date = new Date(0);
+    date.setUTCSeconds(this.userInfo.tokenExpiration)
     if (date && date.valueOf() < new Date().valueOf()) return true;
     return false;
   }
