@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
 
 interface Cart {
   image?: string,
@@ -21,27 +22,18 @@ export class ShoppingCartComponent implements OnInit {
 
   shoppingData: Cart[] = [];
 
-  constructor() { }
+  constructor(private shoppingCartService: ShoppingCartService) { }
 
   ngOnInit(): void {
-    this.shoppingData.push({
-      image: 'https://static.eattasty.com/cloudinary/eattasty/image/upload/q_auto/v1577911805/web_809_fswyha.jpg', name: 'Tomato Soup',
-      price: 5, quantity: 2
-    });
-    this.shoppingData.push({
-      image: 'https://static.eattasty.com/cloudinary/eattasty/image/upload/q_auto/v1610722723/2076-lulas-molho-verde_woamn6.jpg', name: 'Grilled Squid with "Molho Verde"',
-      price: 5, quantity: 2
-    })
-    this.dataSource = new MatTableDataSource(this.shoppingData);
-    console.log(this.dataSource.data)
+    this.shoppingData = this.shoppingCartService.shoppingData;
   }
 
   removeQuantity(element: Cart): void {
-    element.quantity--;
+    this.shoppingCartService.removeQuantity(element);
   }
 
   addQuantity(element: Cart): void {
-    element.quantity++;
+    this.shoppingCartService.addQuantity(element);
   }
 
   totalQuantity(): number {
@@ -53,6 +45,6 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   removeProduct(element: Cart): void {
-    this.shoppingData = this.shoppingData.filter(x => x !== element)
+    this.shoppingData = this.shoppingCartService.removeProduct(element);
   }
 }
