@@ -17,10 +17,17 @@
                 <div class="food-image">
                     <img src="{{c.image}}">
                 </div>
-                <div style="text-align: end; margin-top: 20px;">
-                    <button #info mat-button (click)=expandNutricional(c)>
-                        <mat-icon>expand_more</mat-icon>Nutricional Info
-                    </button>
+                <div fxLayout>
+                    <div fxFlex="50%" style="text-align: begin; margin-top: 20px;">
+                        <button #info mat-button (click)=expandNutricional(c)>
+                            <mat-icon>expand_more</mat-icon>Nutricional Info
+                        </button>
+                    </div>
+                    <div fxFlex style="text-align: end; margin-top: 20px;">
+                        <button #info mat-button (click)=addToCart(c)>
+                            <mat-icon>add_shopping_cart</mat-icon>Add to Cart
+                        </button>
+                    </div>
                 </div>
                 <mat-tab-group *ngIf="c.expandNutricional">
                     <mat-tab>
@@ -29,7 +36,7 @@
                         </ng-template>
                         <mat-list>
                             <mat-list-item *ngFor="let ing of c.ingredients">
-                                <mat-icon matListIcon>menu_book</mat-icon> {{ing}}
+                                <mat-icon matListIcon>format_list_bulleted</mat-icon> {{ing}}
                             </mat-list-item>
                         </mat-list>
                     </mat-tab>

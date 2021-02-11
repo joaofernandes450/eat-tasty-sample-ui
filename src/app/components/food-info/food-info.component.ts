@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { LoadingService } from 'src/app/services/loading/loading.service';
+import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
 
 interface Food {
   image: string;
@@ -27,6 +28,13 @@ interface Nutricional {
   sodium: number;
 }
 
+interface Cart {
+  image?: string,
+  name: string,
+  price: number,
+  quantity: number
+}
+
 @Component({
   selector: 'app-food-info',
   templateUrl: './food-info.component.html',
@@ -47,7 +55,7 @@ export class FoodInfoComponent implements OnInit {
 
   tableData: any[] = [];
 
-  constructor(private fb: FormBuilder, private loadingService: LoadingService) { }
+  constructor(private fb: FormBuilder, private loadingService: LoadingService, private shoppingCartService: ShoppingCartService) { }
 
   ngOnInit(): void {
     this.formatData();
@@ -183,6 +191,15 @@ export class FoodInfoComponent implements OnInit {
    */
   expandNutricional(c: Food): void {
     c.expandNutricional = !c.expandNutricional;
+  }
+
+  /**
+   * Adds a product to the shopping cart
+   * @param c - element selected
+   */
+  addToCart(c: Food): void {
+    const temp: Cart = { image: c.image, name: c.title, quantity: 1, price: 5 };
+    this.shoppingCartService.addProduct(temp);
   }
 
   /**

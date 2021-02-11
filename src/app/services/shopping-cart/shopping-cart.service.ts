@@ -21,6 +21,7 @@ export class ShoppingCartService {
 
     this.shoppingDataChange.subscribe((value) => {
       this.shoppingData = value;
+      localStorage.setItem('shopping-cart-12345', JSON.stringify(this.shoppingData));
     })
 
     // For now 12345 relates to an User ID that will be implemented when backend is operation
@@ -55,5 +56,16 @@ export class ShoppingCartService {
     this.shoppingDataChange.next(this.shoppingData);
     localStorage.setItem('shopping-cart-12345', JSON.stringify(this.shoppingData));
     return this.shoppingData;
+  }
+
+  addProduct(element: Cart): void {
+    const data = this.shoppingData.find(x => x.name === element.name); //Change after to id's when backend is operational
+    if (data) {
+      data.quantity++;
+      this.shoppingDataChange.next(this.shoppingData);
+    } else {
+      this.shoppingData.push(element);
+      this.shoppingDataChange.next(this.shoppingData);
+    }
   }
 }

@@ -26,6 +26,10 @@ export class ShoppingCartComponent implements OnInit {
 
   ngOnInit(): void {
     this.shoppingData = this.shoppingCartService.shoppingData;
+    this.shoppingCartService.shoppingDataChange.subscribe((value) => {
+      this.shoppingData = value;
+      this.shoppingData = [...this.shoppingData]; //mat-table requires to update
+    })
   }
 
   removeQuantity(element: Cart): void {
