@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Gallery, GalleryRef } from 'ng-gallery';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { LoadingService } from 'src/app/services/loading/loading.service';
+import { NotificationSnackbarService } from 'src/app/services/notification-snackbar/notification-snackbar.service';
 import { CustomValidators } from 'src/app/utils/custom-validators';
 
 @Component({
@@ -21,7 +23,7 @@ export class LoginComponent implements OnInit {
 
   galleryId = 'gallery';
 
-  constructor(private fb: FormBuilder, private router: Router, private authenticationService: AuthenticationService, private gallery: Gallery) {
+  constructor(private fb: FormBuilder, private router: Router, private authenticationService: AuthenticationService, private gallery: Gallery, private loadingService: LoadingService, private notificationService: NotificationSnackbarService) {
   }
 
   ngOnInit(): void {
@@ -58,7 +60,6 @@ export class LoginComponent implements OnInit {
       src: '/assets/4.jpg',
       title: 'Some title'
     });
-    console.log(galleryRef)
     this.dataLoaded = true;
   }
 
@@ -67,12 +68,19 @@ export class LoginComponent implements OnInit {
    */
   userLogin(): void {
     if (this.loginForm.valid) {
-      this.authenticationService.userLogin(this.loginForm.get('email').value, this.loginForm.get('password').value).subscribe(res => {
-        if (res && res.success) {
-          this.router.navigate(['/app/home'])
-        }
+      this.loadingService.showLoadingSpinner();
+      this.authenticationService.userLogin(this.loginForm.get('email').value, this.loginForm.get('password').value).subscribe(data => {
+        setTimeout(() => {
+          if (data && data.success) {
+            this.loadingService.stopLoadingSpinner();
+            this.notificationService.showSuccess('Welcome back!')
+            this.router.navigate(['/app/home']);
+          } else {
+            this.loadingService.stopLoadingSpinner();
+            this.notificationService.showError(data.message);
+          }
+        }, 2000)
       })
     }
   }
-
 }

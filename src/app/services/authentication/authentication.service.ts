@@ -2,19 +2,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import jwt_decode from 'jwt-decode';
 
 interface Result {
   success: boolean;
   message: string;
   data?: any;
+  token?: any;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-
-  private authenticationURL = "";
 
   userInfo: any;
   authenticationSubject: Subject<any> = new Subject<any>();
@@ -30,12 +31,62 @@ export class AuthenticationService {
    */
   userLogin(email: string, password: string): Observable<Result> {
     return new Observable<Result>(observer => {
-      this.userInfo = {
-        tokenExp: new Date(new Date().getTime() + (300 * 60 * 1000)) //10min for now
-      }
-      localStorage.setItem('userInfo', JSON.stringify(this.userInfo));
-      this.authenticationSubject.next(this.userInfo);
-      observer.next({ success: true, message: 'Welcome back!' }) //simulate login
+      this.http.post<Result>(environment.authenticationURL + '/login', { email: email, password: password }).subscribe(data => {
+        if (data.token) {
+          const tokenDecoded: any = jwt_decode(data.token);
+
+          this.userInfo = {
+            token: data.token,
+            tokenExpiration: tokenDecoded.exp,
+            firstName: tokenDecoded.firstName,
+            lastName: tokenDecoded.lastName,
+            email: tokenDecoded.email,
+            phoneNumber: tokenDecoded.phoneNumber,
+            vat: tokenDecoded.vat,
+            address: tokenDecoded.address,
+            deliveryInformation: tokenDecoded.deliveryInformation
+          }
+
+          console.log("TOKEN", this.userInfo);
+
+          localStorage.setItem('userInfo', JSON.stringify(this.userInfo))
+          this.authenticationSubject.next(this.userInfo);
+          observer.next(data)
+        }
+      }, (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error occured.");
+        } else {
+          console.log("Server-side error occured.");
+        }
+        observer.next({ success: false, message: err.error.message ? err.error.message : 'An unexpected error occurred, please try again later!' });
+      })
+    })
+  }
+
+  /**
+   * User registration
+   * @param firstName 
+   * @param lastName 
+   * @param email 
+   * @param phoneNumber 
+   * @param address 
+   * @param deliveryInformation 
+   * @param password 
+   * @param vat 
+   */
+  registerUser(firstName: string, lastName: string, email: string, phoneNumber: string, address: string, deliveryInformation: any, password: string, vat?: string): Observable<Result> {
+    return new Observable<Result>(observer => {
+      this.http.post<Result>(`${environment.authenticationURL}/register`, { firstName: firstName, lastName: lastName, email: email, phoneNumber: phoneNumber, address: address, deliveryInformation: deliveryInformation, password: password, vat: vat }).subscribe(data => {
+        observer.next(data);
+      }, (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error occured.");
+        } else {
+          console.log("Server-side error occured.");
+        }
+        observer.next({ success: false, message: err.error.message ? err.error.message : 'An unexpected error occurred, please try again later!' });
+      })
     })
   }
 

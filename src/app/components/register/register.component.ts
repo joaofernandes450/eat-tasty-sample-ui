@@ -10,6 +10,7 @@ import { DataService } from 'src/app/services/data/data.service';
 import { LoadingService } from 'src/app/services/loading/loading.service';
 import { Router } from '@angular/router';
 import { NotificationSnackbarService } from 'src/app/services/notification-snackbar/notification-snackbar.service';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 export class CustomValidators {
 
@@ -95,7 +96,8 @@ export class RegisterComponent implements OnInit {
 
   doneButtonPressed: boolean = false;
 
-  constructor(private fb: FormBuilder, private dialog: MatDialog, private gallery: Gallery, private dataService: DataService, private loadingService: LoadingService, private router: Router, private notificationService: NotificationSnackbarService) { }
+  constructor(private fb: FormBuilder, private dialog: MatDialog, private gallery: Gallery, private dataService: DataService, private loadingService: LoadingService, private router: Router, private notificationService: NotificationSnackbarService,
+    private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.createRegisterForm();
@@ -220,12 +222,27 @@ export class RegisterComponent implements OnInit {
   registerUser(): void {
     this.doneButtonPressed = true;
     if (this.registerThirdFormGroup.valid) {
+      const deliveryInformation = {
+        name: this.registerSecondFormGroup.get('delivery').value,
+        type: this.registerSecondFormGroup.get('deliveryType').value,
+        floor: this.registerSecondFormGroup.get('floor').value,
+        otherInfo: this.registerSecondFormGroup.get('otherInfo').value,
+        driverInfo: this.registerSecondFormGroup.get('driverInfo').value,
+      };
       this.loadingService.showLoadingSpinner();
-      setTimeout(() => {
-        this.loadingService.stopLoadingSpinner();
-        this.notificationService.showSuccess('Welcome to EatTasty. You can now login using your credentials!')
-        this.router.navigate(['/login']);
-      }, 5000)
+      this.authenticationService.registerUser(this.registerThirdFormGroup.get('firstName').value, this.registerThirdFormGroup.get('lastName').value, this.registerThirdFormGroup.get('email').value,
+        this.registerThirdFormGroup.get('phoneNumber').value, this.registerFirstFormGroup.get('verifyAddress').value, deliveryInformation, this.registerThirdFormGroup.get('password').value, this.registerThirdFormGroup.get('vat').value).subscribe(data => {
+          setTimeout(() => {
+            if (data && data.success) {
+              this.loadingService.stopLoadingSpinner();
+              this.notificationService.showSuccess('Welcome to EatTasty. You can now login using your credentials!')
+              this.router.navigate(['/login']);
+            } else {
+              this.loadingService.stopLoadingSpinner();
+              this.notificationService.showError(data.message);
+            }
+          }, 2000)
+        })
     }
   }
 
