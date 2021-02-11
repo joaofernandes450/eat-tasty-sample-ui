@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   authenticationURL: "http://localhost:8080/users",
+  productURL: "http://localhost:8080/products"
 };
 
 /*

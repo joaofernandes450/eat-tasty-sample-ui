@@ -1,6 +1,6 @@
 <div class="navigation-toolbar-div">
     <mat-toolbar class="fixed-navigation-bar" color="primary">
-        <span routerLink="/">EatTasty</span>
+        <span [routerLink]="userInfo ? ['/app/home'] : ['/']">EatTasty</span>
         <span class="example-spacer"></span>
         <div class="not-logged-buttons" *ngIf="!userInfo">
             <button mat-button routerLink="/login">Sign
@@ -9,8 +9,8 @@
                 up</button>
         </div>
         <div class="logged-in-buttons" *ngIf="userInfo">
-            <button mat-button>Menu
-                <mat-icon>menu_book
+            <button mat-button>History
+                <mat-icon>history
                 </mat-icon>
             </button>
             <button mat-button [matMenuTriggerFor]="cartMenu">Cart

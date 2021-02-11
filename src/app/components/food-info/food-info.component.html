@@ -10,7 +10,7 @@
     <div class="food-info" fxLayout="column" fxLayoutAlign="space-around center" fxLayoutGap="20px">
         <mat-card *ngFor="let c of filteredFoodCards | async; let i = index">
             <mat-card-header>
-                <mat-card-title>{{c.title}}{{c.weight ? ' ( ' + c.weight + ' g ) ' : ''}}</mat-card-title>
+                <mat-card-title>{{c.title}}</mat-card-title>
                 <mat-card-subtitle>{{c.description}}</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content fxLayout="column">
