@@ -17,6 +17,7 @@ interface Food {
   ingredients: string[];
   expandNutricional: boolean;
   nutricional: Nutricional;
+  price: number;
 }
 
 interface Nutricional {
@@ -133,7 +134,7 @@ export class FoodInfoComponent implements OnInit {
    * @param c - element selected
    */
   addToCart(c: Food): void {
-    const temp: Cart = { image: c.image, name: c.title, quantity: 1, price: 5 };
+    const temp: Cart = { image: c.image, name: c.title, quantity: 1, price: c.price };
     this.shoppingCartService.addProduct(temp);
   }
 
