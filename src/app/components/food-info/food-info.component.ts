@@ -62,13 +62,9 @@ export class FoodInfoComponent implements OnInit {
   constructor(private fb: FormBuilder, private loadingService: LoadingService, private shoppingCartService: ShoppingCartService, private activatedRoute: ActivatedRoute, private productService: ProductService, private notificationService: NotificationSnackbarService) { }
 
   ngOnInit(): void {
-
     this.foodTypeFilter = this.activatedRoute.snapshot.paramMap.get('type');
+    this.createSearchFormGroup();
     this.queryData();
-    // this.formatData();
-    this.searchFormGroup = this.fb.group({
-      search: ['']
-    })
     this.filteredFoodCards = this.searchFormGroup.get('search').valueChanges
       .pipe(
         startWith(''),
@@ -76,6 +72,18 @@ export class FoodInfoComponent implements OnInit {
       );
   }
 
+  /**
+   * Initializes search form group
+   */
+  createSearchFormGroup(): void {
+    this.searchFormGroup = this.fb.group({
+      search: ['']
+    })
+  }
+
+  /**
+   * Queries data from database
+   */
   queryData(): void {
     this.productService.getProductsByType(this.foodTypeFilter).subscribe(data => {
       this.loadingService.showLoadingSpinner();
@@ -110,113 +118,6 @@ export class FoodInfoComponent implements OnInit {
     });
     this.dataSource = new MatTableDataSource(this.tableData);
     this.dataLoaded = true;
-    // this.foodCards.push(f2)
-    // index++;
-    // const f1: Food = {
-    //   image: "https://static.eattasty.com/cloudinary/eattasty/image/upload/q_auto/v1577911805/web_809_fswyha.jpg",
-    //   title: "Tomato Soup",
-    //   description: "Tomato Soup with Hard Boiled Egg",
-    //   weight: 250,
-    //   ingredients: ["Basil", "Black Pepper", "Caster Sugar", "Chopped Tomato", "Eggs", "Extra Virgin Olive Oil", "Galic", "Onion", "Salt"], nutricional: {
-    //     energyValueKCAL: 40,
-    //     energyValueKJ: 168,
-    //     fat: 1.9,
-    //     fatSaturates: 0.5,
-    //     carbohydrate: 3.5,
-    //     sugar: 3.1,
-    //     fiber: 1.9,
-    //     protein: 1.4,
-    //     sodium: 1.0
-    //   },
-    //   expandNutricional: false,
-    // }
-
-    // const f2: Food = {
-    //   image: "https://static.eattasty.com/cloudinary/eattasty/image/upload/q_auto/v1577911805/web_809_fswyha.jpg",
-    //   title: "Tomato Soup",
-    //   description: "Tomato Soup with Hard Boiled Egg",
-    //   weight: 250,
-    //   ingredients: ["Basil", "Black Pepper", "Caster Sugar", "Chopped Tomato", "Eggs", "Extra Virgin Olive Oil", "Galic", "Onion", "Salt"], nutricional: {
-    //     energyValueKCAL: 40,
-    //     energyValueKJ: 168,
-    //     fat: 1.9,
-    //     fatSaturates: 0.5,
-    //     carbohydrate: 3.5,
-    //     sugar: 3.1,
-    //     fiber: 1.9,
-    //     protein: 1.4,
-    //     sodium: 1.0
-    //   },
-    //   expandNutricional: false,
-    // }
-
-    // const f3: Food = {
-    //   image: "https://static.eattasty.com/cloudinary/eattasty/image/upload/q_auto/v1577911805/web_809_fswyha.jpg",
-    //   title: "Tomato Soup",
-    //   description: "Tomato Soup with Hard Boiled Egg",
-    //   weight: 250,
-    //   ingredients: ["Basil", "Black Pepper", "Caster Sugar", "Chopped Tomato", "Eggs", "Extra Virgin Olive Oil", "Galic", "Onion", "Salt"], nutricional: {
-    //     energyValueKCAL: 40,
-    //     energyValueKJ: 168,
-    //     fat: 1.9,
-    //     fatSaturates: 0.5,
-    //     carbohydrate: 3.5,
-    //     sugar: 3.1,
-    //     fiber: 1.9,
-    //     protein: 1.4,
-    //     sodium: 1.0
-    //   },
-    //   expandNutricional: false,
-    // }
-
-    // const f4: Food = {
-    //   image: "https://static.eattasty.com/cloudinary/eattasty/image/upload/q_auto/v1577911805/web_809_fswyha.jpg",
-    //   title: "Tomato Soup",
-    //   description: "Tomato Soup with Hard Boiled Egg",
-    //   weight: 250,
-    //   ingredients: ["Basil", "Black Pepper", "Caster Sugar", "Chopped Tomato", "Eggs", "Extra Virgin Olive Oil", "Galic", "Onion", "Salt"], nutricional: {
-    //     energyValueKCAL: 40,
-    //     energyValueKJ: 168,
-    //     fat: 1.9,
-    //     fatSaturates: 0.5,
-    //     carbohydrate: 3.5,
-    //     sugar: 3.1,
-    //     fiber: 1.9,
-    //     protein: 1.4,
-    //     sodium: 1.0
-    //   },
-    //   expandNutricional: false,
-    // }
-
-    // this.foodCards.push(f1)
-    // var index = 0;
-    // this.tableData[index] = [];
-    // for (var key of Object.keys(f1.nutricional)) {
-    //   const value = f1.nutricional[key];
-    //   this.tableData[index].push({ name: key, baseValue: value, baseValueCalculated: value * (f1.weight / 100) })
-    // }
-    // this.foodCards.push(f2)
-    // index++;
-    // this.tableData[index] = [];
-    // for (var key of Object.keys(f2.nutricional)) {
-    //   const value = f2.nutricional[key];
-    //   this.tableData[index].push({ name: key, baseValue: value, baseValueCalculated: value * (f2.weight / 100) })
-    // }
-    // this.foodCards.push(f3)
-    // index++;
-    // this.tableData[index] = [];
-    // for (var key of Object.keys(f3.nutricional)) {
-    //   const value = f3.nutricional[key];
-    //   this.tableData[index].push({ name: key, baseValue: value, baseValueCalculated: value * (f3.weight / 100) })
-    // }
-    // this.foodCards.push(f4)
-    // index++;
-    // this.tableData[index] = [];
-    // for (var key of Object.keys(f4.nutricional)) {
-    //   const value = f4.nutricional[key];
-    //   this.tableData[index].push({ name: key, baseValue: value, baseValueCalculated: value * (f4.weight / 100) })
-    // }
-    // this.dataSource = new MatTableDataSource(this.tableData);
   }
 
   /**
