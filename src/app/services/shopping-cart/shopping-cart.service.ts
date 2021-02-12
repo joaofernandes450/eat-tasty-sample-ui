@@ -23,33 +23,31 @@ export class ShoppingCartService {
       this.shoppingData = value;
       localStorage.setItem('shopping-cart-12345', JSON.stringify(this.shoppingData));
     })
-    // const localSt = JSON.parse(localStorage.getItem('shopping-cart-12345'));
-    // if (!localSt || localSt.length == 0) {
-    //   this.shoppingData.push({
-    //     image: 'https://static.eattasty.com/cloudinary/eattasty/image/upload/q_auto/v1577911805/web_809_fswyha.jpg', name: 'Tomato Soup',
-    //     price: 5, quantity: 2
-    //   });
-    //   this.shoppingData.push({
-    //     image: 'https://static.eattasty.com/cloudinary/eattasty/image/upload/q_auto/v1610722723/2076-lulas-molho-verde_woamn6.jpg', name: 'Grilled Squid with "Molho Verde"',
-    //     price: 5, quantity: 2
-    //   })
-    //   localStorage.setItem('shopping-cart-12345', JSON.stringify(this.shoppingData));
-    // } else {
-    //   this.shoppingData = JSON.parse(localStorage.getItem('shopping-cart-12345'))
-    // }
     this.shoppingData = JSON.parse(localStorage.getItem('shopping-cart-12345'))
   }
 
+  /**
+   * Removes one quantity from an item
+   * @param element 
+   */
   removeQuantity(element: Cart): void {
     element.quantity--;
     localStorage.setItem('shopping-cart-12345', JSON.stringify(this.shoppingData));
   }
 
+  /**
+   * Adds a quantity to an item
+   * @param element 
+   */
   addQuantity(element: Cart): void {
     element.quantity++;
     localStorage.setItem('shopping-cart-12345', JSON.stringify(this.shoppingData));
   }
 
+  /**
+   * Removes a product from the User cart
+   * @param element 
+   */
   removeProduct(element: Cart): Cart[] {
     this.shoppingData = this.shoppingData.filter(x => x.name !== element.name)
     this.shoppingDataChange.next(this.shoppingData);
@@ -57,6 +55,10 @@ export class ShoppingCartService {
     return this.shoppingData;
   }
 
+  /**
+   * Adds a product to the User cart
+   * @param element 
+   */
   addProduct(element: Cart): void {
     const data = this.shoppingData.find(x => x.name === element.name); //Change after to id's when backend is operational
     if (data) {
@@ -66,5 +68,13 @@ export class ShoppingCartService {
       this.shoppingData.push(element);
       this.shoppingDataChange.next(this.shoppingData);
     }
+  }
+
+  /**
+   * Clears the User current cart
+   */
+  clearCart(): void {
+    this.shoppingData.length = 0;
+    this.shoppingDataChange.next(this.shoppingData);
   }
 }

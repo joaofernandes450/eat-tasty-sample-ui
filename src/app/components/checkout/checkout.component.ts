@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { LoadingService } from 'src/app/services/loading/loading.service';
+import { NotificationSnackbarService } from 'src/app/services/notification-snackbar/notification-snackbar.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 interface Cart {
   image?: string,
@@ -26,11 +31,12 @@ export class CheckoutComponent implements OnInit {
   shoppingData: Cart[] = [];
 
   shippingFormGroup: FormGroup;
-  
+
   minDate: Date = new Date();
   maxDate: Date = new Date();
 
-  constructor(private shoppingCartService: ShoppingCartService, private _fb: FormBuilder, private authenticationService: AuthenticationService) { }
+  constructor(private shoppingCartService: ShoppingCartService, private _fb: FormBuilder, private authenticationService: AuthenticationService, private dialog: MatDialog, private loadingService: LoadingService,
+    private notificationService: NotificationSnackbarService, private router: Router) { }
 
   ngOnInit(): void {
     this.shoppingData = this.shoppingCartService.shoppingData;
@@ -64,7 +70,7 @@ export class CheckoutComponent implements OnInit {
    * @param element 
    */
   removeProduct(element: Cart): void {
-    this.shoppingData = this.shoppingCartService.removeProduct(element);
+    this.shoppingCartService.removeProduct(element);
   }
 
   /**
@@ -74,6 +80,9 @@ export class CheckoutComponent implements OnInit {
     return this.shoppingData.reduce((acc, value) => acc + (value.price * value.quantity), 0)
   }
 
+  /**
+   * Creates the necessary Form Group
+   */
   createShippingFormGroup(): void {
     this.shippingFormGroup = this._fb.group({
       firstName: this.authenticationService.userInfo.firstName,
@@ -90,10 +99,30 @@ export class CheckoutComponent implements OnInit {
     })
   }
 
-  myFilter = (d: Date | null): boolean => {
-    const day = (d || new Date()).getDay();
-    // Prevent Saturday and Sunday from being selected.
-    return day !== 0 && day !== 6;
+  /**
+   * Places a new Order.
+   * 
+   * Triggered when the User finishes the checkout process.
+   */
+  placeOrder(): void {
+    if (this.shippingFormGroup.valid) {
+      const message = 'Place this order and simulate payment details?';
+      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+        data: message
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.loadingService.showLoadingSpinner();
+          setTimeout(() => {
+            // order service here
+            this.shoppingCartService.clearCart();
+            this.notificationService.showSuccess('Order now placed with number #23499');
+            this.loadingService.stopLoadingSpinner();
+            this.router.navigate(['/app/home']);
+          }, 2000)
+        }
+      })
+    }
   }
 
 }
