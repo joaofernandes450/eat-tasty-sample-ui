@@ -41,9 +41,11 @@
                 <ng-container matColumnDef="Actions">
                     <th mat-header-cell *matHeaderCellDef style="text-align: center;">Actions</th>
                     <td mat-cell *matCellDef="let element">
-                        <button mat-icon-button style="color: red;" (click)="removeProduct(element)">
-                            <mat-icon>clear</mat-icon>
-                        </button>
+                        <div fxLayout fxLayoutAlign="center center">
+                            <button mat-icon-button style="color: red;" (click)="removeProduct(element)">
+                                <mat-icon>clear</mat-icon>
+                            </button>
+                        </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef style="text-align: center;">
                         <button mat-raised-button color="accent" (click)="proceed = !proceed">Proceed</button>
@@ -87,5 +89,85 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="checkout-personal-info" fxFlex="85%" fxLayout.lt-md="column" fxLayoutGap="10px" *ngIf="proceed">
+        <form [formGroup]="shippingFormGroup">
+            <div fxLayout="column" fxFlexfill>
+                <h2>Billing Information</h2>
+                <div fxLayout fxLayout.lt-sm="column" fxLayoutGap="20px" fxLayoutGap.lt-sm="0px">
+                    <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%" fxFlex.lt-sm="100%">
+                        <mat-label>First Name</mat-label>
+                        <input matInput formControlName="firstName" required readonly>
+                    </mat-form-field>
+                    <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%" fxFlex.lt-sm="100%">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput formControlName="lastName" required readonly>
+                    </mat-form-field>
+                </div>
+                <div fxLayout fxLayout.lt-sm="column" fxLayoutGap="20px" fxLayoutGap.lt-sm="0px">
+                    <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%" fxFlex.lt-sm="100%">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email" readonly>
+                    </mat-form-field>
+                    <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%" fxFlex.lt-sm="100%">
+                        <mat-label>VAT</mat-label>
+                        <input matInput formControlName="vat">
+                    </mat-form-field>
+                </div>
+                <div fxLayout fxLayout.lt-sm="column" fxLayoutGap="20px" fxLayoutGap.lt-sm="0px">
+                    <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%" fxFlex.lt-sm="100%">
+                        <mat-label>Address</mat-label>
+                        <input matInput formControlName="address" required readonly>
+                    </mat-form-field>
+                    <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%" fxFlex.lt-sm="100%">
+                        <mat-label>Post Code</mat-label>
+                        <input matInput formControlName="postalCode" required readonly>
+                    </mat-form-field>
+                    <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%" fxFlex.lt-sm="100%">
+                        <mat-label>City</mat-label>
+                        <input matInput formControlName="city" required readonly>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="column" fxFlexfill>
+                <h2>Delivery Information</h2>
+                <div fxLayout fxLayout.lt-sm="column" fxLayoutGap="20px" fxLayoutGap.lt-sm="0px">
+                    <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="100%"
+                        fxFlex.lt-sm="100%">
+                        <mat-label>Delivery Address</mat-label>
+                        <input matInput formControlName="deliveryAddress" required readonly>
+                    </mat-form-field>
+                </div>
+                <mat-form-field class="form-field-full-width" appearance="outline">
+                    <mat-label>Delivery Date</mat-label>
+                    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" formControlName="date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="shippingFormGroup.controls.date.invalid">
+                        Please select a valid option!
+                    </mat-error>
+                </mat-form-field>
+                <label id="example-radio-group-label">Delivery Time:</label>
+                <mat-radio-group class="radio-group" formControlName="timeframe">
+                    <mat-radio-button class="radio-button" value="lunch">
+                        Lunch: 13:00 - 13:30
+                    </mat-radio-button>
+                    <mat-radio-button class="radio-button" value="dinner">
+                        Dinner: 20:15 - 21:15
+                    </mat-radio-button>
+                </mat-radio-group>
+                <label id="example-radio-group-label">Shipping Type:</label>
+                <mat-radio-group class="radio-group" formControlName="shippingType">
+                    <mat-radio-button class="radio-button" value="free" checked>
+                        Free Shipping: {{0 | currency}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="button-right-align">
+                <button mat-raised-button type="button" color="warn" (click)="proceed = !proceed">View Order</button>
+                <button mat-raised-button color="primary">Confirm</button>
+            </div>
+        </form>
     </div>
 </div>

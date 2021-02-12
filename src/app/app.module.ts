@@ -1,7 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+
+// Localization
+import localePt from '@angular/common/locales/pt-PT';
 
 // FlexLayout Module
 import { FlexLayoutModule } from "@angular/flex-layout";
@@ -28,6 +31,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 
 // Packages
 import { IvyCarouselModule } from 'angular-responsive-carousel';
@@ -54,6 +59,9 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { FoodInfoComponent } from './components/food-info/food-info.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(localePt, 'pt-PT');
 
 @NgModule({
   declarations: [
@@ -106,9 +114,13 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
     MatTabsModule,
     MatTableModule,
     MatBadgeModule,
-    MatDividerModule
+    MatDividerModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
-  providers: [AuthenticationGuard],
+  providers: [AuthenticationGuard,
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    { provide: LOCALE_ID, useValue: 'pt-PT' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

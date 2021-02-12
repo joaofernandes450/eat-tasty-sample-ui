@@ -39,3 +39,7 @@ img {
     font-weight: bold;
     border-bottom: none;
 }
+
+.checkout-personal-info {
+    width: 70%;
+}
