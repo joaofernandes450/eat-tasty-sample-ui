@@ -1,0 +1,91 @@
+<div class="checkout-div" fxLayout="column" fxLayoutAlign="center center" style="height: 100%">
+    <div class="checkout-container" fxFlex="70%" fxLayout.lt-md="column" fxLayoutGap="10px" *ngIf="!proceed">
+        <div class="checkout-table" fxFlex="80%" fxFlex.lt-lg="100%">
+            <table mat-table [dataSource]="shoppingData">
+                <ng-container matColumnDef="Product">
+                    <th mat-header-cell *matHeaderCellDef>Product</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div fxLayout fxLayoutGap="10px" fxLayoutAlign="center center">
+                            <div fxFlex="15%" fxFlex.lt-lg="40%">
+                                <img src="{{element.image}}">
+                            </div>
+                            <div fxFlex>
+                                {{element.name}}
+                            </div>
+                        </div>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef>
+                        <button mat-raised-button routerLink="/app/home">Back</button>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Quantity">
+                    <th mat-header-cell *matHeaderCellDef style="text-align: center;">Quantity</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div fxLayout fxLayoutAlign="center center">
+                            <button mat-icon-button style="color:grey" (click)="removeQuantity(element)"
+                                *ngIf="element.quantity > 1">
+                                <mat-icon>remove</mat-icon>
+                            </button>
+                            <div>
+                                {{element.quantity}}
+                            </div>
+                            <button mat-icon-button style="color: green;" (click)="addQuantity(element)">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef style="text-align: center;"> </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef style="text-align: center;">Actions</th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button style="color: red;" (click)="removeProduct(element)">
+                            <mat-icon>clear</mat-icon>
+                        </button>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef style="text-align: center;">
+                        <button mat-raised-button color="accent" (click)="proceed = !proceed">Proceed</button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnHeaders" class="first-table-row"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnHeaders;" class="table-row"></tr>
+                <tr mat-footer-row *matFooterRowDef="columnHeaders" class="footer-table-row"></tr>
+            </table>
+        </div>
+        <div class="checkout-options" fxFlex="20%" fxFlex.lt-lg="100%" fxLayout="column" fxLayoutAlign="start center"
+            fxLayoutGap="10px">
+            <div class="checkout-coupoun" fxFlex="35%" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
+                <h3>Have a coupon?</h3>
+                <mat-form-field appearance="outline">
+                    <mat-label>Coupon</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="checkout-total" fxFlex="65%" fxLayout="column" fxLayoutAlign="center stretch" fxFlexFill>
+                <div fxLayout fxLayoutAlign="space-between center">
+                    <h4>Price:</h4>
+                    <h4>{{getTotal() | currency}}</h4>
+                </div>
+                <div fxLayout fxLayoutAlign="space-between center">
+                    <h4>Discount:</h4>
+                    <h4>{{0 | currency}}</h4>
+                </div>
+                <div fxLayout fxLayoutAlign="space-between center">
+                    <h4>Total:</h4>
+                    <h4>{{getTotal() | currency}}</h4>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout fxLayoutAlign="center center">
+                    <img src="./../../../assets/visa.webp">
+                    <img src="./../../../assets/mastercard.webp">
+                    <img src="./../../../assets/paypal.webp">
+                    <img src="./../../../assets/mbway.webp">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
