@@ -100,10 +100,6 @@ registerLocaleData(localePt, 'pt-PT');
     MatStepperModule,
     MatCheckboxModule,
     MatRadioModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAQvl6bTYhrYsvSDAqaUzrVcd_tMG326pM',
-      libraries: ['places']
-    }),
     MatGoogleMapsAutocompleteModule,
     MatDialogModule,
     GalleryModule,
