@@ -69,8 +69,8 @@ export class LoginComponent implements OnInit {
   userLogin(): void {
     if (this.loginForm.valid) {
       this.loadingService.showLoadingSpinner();
-      this.authenticationService.userLogin(this.loginForm.get('email').value, this.loginForm.get('password').value).subscribe(data => {
-        setTimeout(() => {
+      setTimeout(() => {
+        this.authenticationService.userLogin(this.loginForm.get('email').value, this.loginForm.get('password').value).subscribe(data => {
           if (data && data.success) {
             this.loadingService.stopLoadingSpinner();
             this.notificationService.showSuccess('Welcome back!')
@@ -79,8 +79,8 @@ export class LoginComponent implements OnInit {
             this.loadingService.stopLoadingSpinner();
             this.notificationService.showError(data.message);
           }
-        }, 2000)
-      })
+        })
+      }, 2000)
     }
   }
 }

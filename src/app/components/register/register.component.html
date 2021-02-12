@@ -30,6 +30,10 @@
                             <button mat-raised-button color="primary" matStepperNext>Next</button>
                         </div>
                     </form>
+                    <div style="text-align: center;">
+                        <p>Already have an account? <span class="link-underline" routerLink="/login">Sign in now</span>
+                        </p>
+                    </div>
                 </mat-step>
                 <mat-step [stepControl]="registerSecondFormGroup" [editable]="false">
                     <form [formGroup]="registerSecondFormGroup">
