@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { LoadingService } from 'src/app/services/loading/loading.service';
 import { NotificationSnackbarService } from 'src/app/services/notification-snackbar/notification-snackbar.service';
+import { OrderService } from 'src/app/services/order/order.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
@@ -36,7 +37,7 @@ export class CheckoutComponent implements OnInit {
   maxDate: Date = new Date();
 
   constructor(private shoppingCartService: ShoppingCartService, private _fb: FormBuilder, private authenticationService: AuthenticationService, private dialog: MatDialog, private loadingService: LoadingService,
-    private notificationService: NotificationSnackbarService, private router: Router) { }
+    private notificationService: NotificationSnackbarService, private router: Router, private orderService: OrderService) { }
 
   ngOnInit(): void {
     this.shoppingData = this.shoppingCartService.shoppingData;
@@ -112,13 +113,22 @@ export class CheckoutComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
+          let timeFrame;
+          this.shippingFormGroup.get('timeframe').value == 'lunch' ? timeFrame = "Lunch: 13:00 - 13:30" : timeFrame = "Dinner: 20:15 - 21:15";
+          const products = this.shoppingData.map(x => { return { name: x.name, quantity: x.quantity } })
           this.loadingService.showLoadingSpinner();
           setTimeout(() => {
-            // order service here
-            this.shoppingCartService.clearCart();
-            this.notificationService.showSuccess('Order now placed with number #23499');
-            this.loadingService.stopLoadingSpinner();
-            this.router.navigate(['/app/home']);
+            this.orderService.createOrder(this.authenticationService.userInfo.id, this.shippingFormGroup.get('date').value, timeFrame, this.authenticationService.userInfo.address, products, this.getTotal()).subscribe(response => {
+              if (response && response.success) {
+                this.loadingService.stopLoadingSpinner();
+                this.shoppingCartService.clearCart();
+                this.notificationService.showSuccess('Order now placed with number ' + response.data);
+                this.router.navigate(['/app/home']);
+              } else {
+                this.loadingService.stopLoadingSpinner();
+                this.notificationService.showError(response.message);
+              }
+            })
           }, 2000)
         }
       })

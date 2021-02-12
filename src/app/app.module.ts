@@ -61,6 +61,7 @@ import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { registerLocaleData } from '@angular/common';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
+import { OrderComponent } from './components/order/order.component';
 
 registerLocaleData(localePt, 'pt-PT');
 
@@ -78,6 +79,7 @@ registerLocaleData(localePt, 'pt-PT');
     ShoppingCartComponent,
     CheckoutComponent,
     ConfirmationDialogComponent,
+    OrderComponent,
   ],
   imports: [
     BrowserModule,

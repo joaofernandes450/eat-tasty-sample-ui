@@ -1,0 +1,100 @@
+<div class="order-div" fxLayout="column" style="height: 100%">
+    <div class="order-container" fxLayout="column" fxLayout.lt-md="column" fxLayoutGap="10px">
+        <div fxLayout="column" fxFlexfill fxLayoutAlign="center center">
+            <form [formGroup]="orderFormGroup" (ngSubmit)="searchOrders()">
+                <h2>Filters</h2>
+                <div class="filterButtonsDiv" fxLayout fxLayout.lt-sm="column" fxLayoutAlign="stretch center"
+                    fxLayoutGap="20px" fxLayoutGap.lt-sm="0px">
+                    <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%" fxFlex.lt-sm="100%">
+                        <mat-label>State</mat-label>
+                        <mat-select formControlName="state">
+                            <mat-option>
+                                Remove Filter
+                            </mat-option>
+                            <mat-option *ngFor="let state of orderStateArray" [value]="state">
+                                {{state}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="form-field-full-width" appearance="outline" fxFlex="50%" fxFlex.lt-sm="100%">
+                        <mat-label>Date Interval</mat-label>
+                        <mat-date-range-input [rangePicker]="picker">
+                            <input matStartDate formControlName="startDate" placeholder="Start date">
+                            <input matEndDate formControlName="endDate" placeholder="End date">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
+                    </mat-form-field>
+                    <button mat-raised-button color="primary">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="checkout-table" fxFlex="80%" fxFlex.lt-lg="100%">
+            <h2>Orders</h2>
+            <table mat-table [dataSource]="orderData">
+                <ng-container matColumnDef="Address">
+                    <th mat-header-cell *matHeaderCellDef>Address</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div fxLayout fxLayoutGap="10px" fxLayoutAlign="center center">
+                            <div fxFlex>
+                                {{formatAddress(element.deliveryAddress)}}
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Date">
+                    <th mat-header-cell *matHeaderCellDef>Date</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div fxLayout fxLayoutGap="10px" fxLayoutAlign="center center">
+                            <div fxFlex>
+                                {{element.deliveryDate | date}}
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Time">
+                    <th mat-header-cell *matHeaderCellDef>Time</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div fxLayout fxLayoutGap="10px" fxLayoutAlign="center center">
+                            <div fxFlex>
+                                {{element.deliveryTime}}
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Price">
+                    <th mat-header-cell *matHeaderCellDef>Price</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div fxLayout fxLayoutGap="10px" fxLayoutAlign="center center">
+                            <div fxFlex>
+                                {{element.totalPrice | currency}}
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="State">
+                    <th mat-header-cell *matHeaderCellDef>State</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div fxLayout fxLayoutGap="10px" fxLayoutAlign="center center">
+                            <div fxFlex>
+                                {{element.state}}
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnHeaders"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnHeaders;"
+                    (click)="expandedElement = expandedElement === element ? null : element"></tr>
+
+            </table>
+        </div>
+    </div>
+
+</div>

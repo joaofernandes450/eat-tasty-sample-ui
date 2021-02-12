@@ -38,6 +38,7 @@ export class AuthenticationService {
           this.userInfo = {
             token: data.token,
             tokenExpiration: tokenDecoded.exp,
+            id: tokenDecoded.id,
             firstName: tokenDecoded.firstName,
             lastName: tokenDecoded.lastName,
             email: tokenDecoded.email,

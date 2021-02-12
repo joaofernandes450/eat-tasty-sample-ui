@@ -9,6 +9,7 @@ import { UserHomepageComponent } from './components/user-homepage/user-homepage.
 import { RegisterComponent } from './components/register/register.component';
 import { FoodInfoComponent } from './components/food-info/food-info.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { OrderComponent } from './components/order/order.component';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
@@ -19,7 +20,8 @@ const routes: Routes = [
     children: [
       { path: 'home', component: UserHomepageComponent, canActivate: [AuthenticationGuard] },
       { path: 'food/:type', component: FoodInfoComponent, canActivate: [AuthenticationGuard] },
-      { path: 'checkout', component: CheckoutComponent, canActivate: [AuthenticationGuard] }
+      { path: 'checkout', component: CheckoutComponent, canActivate: [AuthenticationGuard] },
+      { path: 'order', component: OrderComponent, canActivate: [AuthenticationGuard] }
     ]
   }
 ];
